@@ -1,0 +1,47 @@
+---
+
+- name: Get geonode
+  git:
+    repo: https://github.com/GeoNode/geonode.git
+    dest: "{{ geonode_dir }}"
+    version: 2.6.x
+    depth: 10
+
+
+- name: Install python requirements
+  pip:
+    name: "{{ geonode_dir }}" # requirements.txt
+
+- name: Install python six
+  pip:
+    name: six # Apache does not find six :/
+    state: latest
+- name: Add apache2 conf
+  template:
+    src: conf/geonode.conf
+    dest: /etc/apache2/sites-available/
+
+- name: Change project owner
+  file:
+    path: "{{ geonode_dir }}"
+    owner: geonode
+    state: directory
+    recurse: yes
+
+- name: Create default directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: geonode
+    group: www-data
+    mode: 0777
+    recurse: yes
+  with_items:
+    - "{{ geonode_dir }}/geonode/uploaded/thumbs"
+    - "{{ geonode_dir }}/geonode/uploaded/layer"
+
+- name: Run collect static
+  shell: python manage.py collectstatic --noinput
+  args:
+    chdir: "{{ geonode_dir }}"
+  become_user: geonode

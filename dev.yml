@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:9.5
+    environment:
+      POSTGRES_USER: geonode
+      POSTGRES_PASSWORD: geonode
+    networks:
+      main:
+  geonode:
+    build: geonode
+    environment:
+      - ALLOWED_HOST_IP=127.0.0.1
+      - ALLOWED_HOST_NAME=localhost
+      - SITEURL=http://127.0.0.1/
+    command: run_server.sh
+    networks:
+      main:
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+  geonetwork:
+    image: geonetwork:3.0.5
+    networks:
+      main:
+    ports:
+      - "8080:8080"
+
+networks:
+  main:

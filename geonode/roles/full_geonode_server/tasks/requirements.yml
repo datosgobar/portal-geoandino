@@ -1,0 +1,38 @@
+---
+
+- name: Install requirements
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - python-virtualenv
+    - build-essential
+    - openssh-server
+    - apache2
+    - gcc
+    - gdal-bin
+    - gettext
+    - git-core
+    - libapache2-mod-wsgi
+    - libgeos-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libpq-dev
+    - libproj-dev
+    - libxml2-dev
+    - libxslt-dev
+    - patch 
+    - python
+    - python-dev
+    - python-gdal
+    - python-pycurl
+    - python-imaging
+    - python-pip
+    - python-pastescript
+    - python-psycopg2
+    - python-support
+    - python-urlgrabber
+    - python-virtualenv
+    - unzip
+    - zip
+    - vim

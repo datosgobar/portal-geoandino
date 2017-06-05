@@ -1,0 +1,26 @@
+---
+
+- name: Add apache2 conf
+  template:
+    src: conf/geonode.conf
+    dest: /etc/apache2/sites-available/
+
+- name: Enable apache proxy_http mod
+  apache2_module:
+    state: present
+    name: proxy_http
+
+- name: Disable default site
+  shell: a2dissite 000-default
+
+- name: Enable geonode site
+  shell: a2ensite geonode
+
+
+- name: Change static owner and group
+  file:
+    path: "{{ geonode_dir }}/geonode/static_root/"
+    owner: www-data
+    group: www-data
+    recurse: yes
+    state: directory

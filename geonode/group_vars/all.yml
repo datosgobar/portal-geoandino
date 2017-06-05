@@ -1,0 +1,12 @@
+---
+
+geonode_home: /home/geonode/
+geonode_dir: "{{ geonode_home }}geonode/"
+geonode_host: geonode
+
+database_host: db
+data_db_name: geonode_data
+
+geoserver_host: geonetwork
+geoserver_port: 8080
+geoserver_url: "http://{{ geoserver_host }}:{{ geoserver_port }}"

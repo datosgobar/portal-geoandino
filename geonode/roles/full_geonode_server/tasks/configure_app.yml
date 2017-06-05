@@ -1,0 +1,69 @@
+---
+
+- name: Copy django settings file
+  shell: "cp {{ geonode_dir }}geonode/local_settings.py.qgis.sample {{ geonode_dir }}geonode/local_settings.py"
+  become_user: geonode
+
+- name: Set GeoNode host
+  lineinfile:
+    path: "{{geonode_dir}}/geonode/local_settings.py"
+    regexp: 'SITEURL = .*'
+    line: 'SITEURL = os.environ.get("SITEURL", "http://localhost/")'
+
+- name: Add ALLOWED_HOSTS
+  blockinfile:
+    path: "{{ geonode_dir }}/geonode/local_settings.py"
+    marker: "#!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    insertafter: "SITE_URL.*"
+    content: |
+      ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOST_IP", '127.0.0.1'), os.environ.get("ALLOWED_HOST_NAME", 'localhost'), '::1']
+      PROXY_ALLOWED_HOSTS = (os.environ.get("ALLOWED_HOST_IP", '127.0.0.1'), os.environ.get("ALLOWED_HOST_NAME", 'localhost'), '::1')
+      POSTGIS_VERSION = (2, 1, 2)
+    
+- name: Add default database host
+  blockinfile:
+    path: "{{ geonode_dir }}/geonode/local_settings.py"
+    marker: "#!-- {mark} default database ANSIBLE MANAGED BLOCK -->"
+    insertafter: ".*django.db.backends.postgresql_psycopg2.*"
+    content: |
+      'HOST': '{{ database_host }}',
+
+- name: Add geonetwork configuration
+  lineinfile:
+    path: /home/geonode/geonode/geonode/local_settings.py
+    regexp: "'ENGINE': 'geonode.catalogue.backends.pycsw_local',"
+    line: ""
+
+- name: Remove default URL for catalog
+  lineinfile:
+    path: /home/geonode/geonode/geonode/local_settings.py
+    regexp: "'URL': '%scatalogue/csw' % SITEURL,"
+    line: ""
+
+- name: Change OGC server location
+  lineinfile:
+    path: /home/geonode/geonode/geonode/local_settings.py
+    regexp: "'LOCATION': SITEURL.*"
+    line: "'LOCATION': SITEURL + 'geonetwork/',"
+
+- name: Change OGC server public location
+  lineinfile:
+    path: /home/geonode/geonode/geonode/local_settings.py
+    regexp: "'PUBLIC_LOCATION': SITEURL.*"
+    line: "'PUBLIC_LOCATION': SITEURL + 'geonetwork/',"
+
+- name: Add geonetwork configuration
+  blockinfile:
+    path: /home/geonode/geonode/geonode/local_settings.py
+    marker: "#!-- {mark} geonetwork configuation ANSIBLE MANAGED BLOCK -->"
+    insertafter: "# The underlying CSW implementation"
+    content: |
+      'ENGINE': 'geonode.catalogue.backends.geonetwork',
+      'URL': '{{ geoserver_url }}/geonetwork/srv/en/csw',
+
+
+- name: Fix OGC LOG
+  lineinfile:
+    path: /home/geonode/geonode/geonode/local_settings.py
+    regexp: "'LOG_FILE':.*"
+    line: "'LOG_FILE' : '/dev/stdout',"
