@@ -2,10 +2,11 @@ version: '3'
 
 services:
   db:
-    image: postgres:9.5
+    build: postgres
     environment:
       POSTGRES_USER: geonode
       POSTGRES_PASSWORD: geonode
+      DATASTORE_DB: geonode_data
     networks:
       main:
   geonode:
@@ -22,7 +23,7 @@ services:
     ports:
       - "80:80"
   geonetwork:
-    image: geonetwork:3.0.5
+    build: geonetwork
     networks:
       main:
     ports:
