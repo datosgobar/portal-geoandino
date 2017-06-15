@@ -13,8 +13,10 @@ services:
     build: geonode
     environment:
       - ALLOWED_HOST_IP=127.0.0.1
+      - PROXY_ALLOWED_HOST_IP=127.0.0.1
       - ALLOWED_HOST_NAME=localhost
-      - SITEURL=http://127.0.0.1/
+      - PROXY_ALLOWED_HOST_NAME=geoserver:8080
+      - SITEURL=http://localhost/
     command: run_server.sh
     networks:
       main:
@@ -24,6 +26,12 @@ services:
       - "80:80"
   geonetwork:
     build: geonetwork
+    networks:
+      main:
+    expose:
+      - "8080"
+  geoserver:
+    build: geoserver
     networks:
       main:
     ports:

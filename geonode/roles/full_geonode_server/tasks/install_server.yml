@@ -10,7 +10,12 @@
 
 - name: Install python requirements
   pip:
-    name: "{{ geonode_dir }}" # requirements.txt
+    name: "{{ geonode_dir }}"
+
+- name: Install paver
+  shell: paver setup
+  args:
+    chdir: "{{ geonode_dir }}"
 
 - name: Install python six
   pip:
