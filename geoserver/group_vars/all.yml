@@ -1,0 +1,11 @@
+---
+
+geonode_host: geonode
+
+geoserver_version: 2.9.x
+base_dir: /usr/local/tomcat/
+data_dir: "{{ base_dir }}webapps/geoserver/WEB-INF/data/"
+webapps_dir: "{{ base_dir }}webapps/"
+
+web_xml_file: "{{ webapps_dir }}geoserver/WEB-INF/web.xml"
+config_xml_file: "{{ webapps_dir }}geoserver/data/security/auth/geonodeAuthProvider/config.xml"
