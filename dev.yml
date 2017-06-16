@@ -12,10 +12,10 @@ services:
   geonode:
     build: geonode
     environment:
-      - ALLOWED_HOST_IP=127.0.0.1
-      - PROXY_ALLOWED_HOST_IP=127.0.0.1
-      - ALLOWED_HOST_NAME=localhost
-      - PROXY_ALLOWED_HOST_NAME=geoserver:8080
+      - ALLOWED_HOST_IP=geonode
+      - PROXY_ALLOWED_HOST_IP=geonode
+      - ALLOWED_HOST_NAME=geonode
+      - PROXY_ALLOWED_HOST_NAME=geonode
       - SITEURL=http://localhost/
     command: run_server.sh
     networks:

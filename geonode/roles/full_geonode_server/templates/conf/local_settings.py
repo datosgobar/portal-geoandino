@@ -24,8 +24,14 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 SITEURL = os.environ.get("SITEURL", "http://localhost/")
 
-ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOST_IP", '127.0.0.1'), os.environ.get("ALLOWED_HOST_NAME", 'localhost'), '::1']
-PROXY_ALLOWED_HOSTS = (os.environ.get("PROXY_ALLOWED_HOST_IP", '127.0.0.1'), os.environ.get("PROXY_ALLOWED_HOST_NAME", 'localhost'), '::1')
+ALLOWED_HOSTS = [
+    'localhost', '127.0.0.1',
+    os.environ.get("ALLOWED_HOST_IP", '127.0.0.1'), os.environ.get("ALLOWED_HOST_NAME", 'localhost')
+]
+PROXY_ALLOWED_HOSTS = (
+    'localhost', '127.0.0.1', 
+    os.environ.get("PROXY_ALLOWED_HOST_IP", '127.0.0.1'), os.environ.get("PROXY_ALLOWED_HOST_NAME", 'localhost'), 
+)
 POSTGIS_VERSION = (2, 1, 2)
 
 DATABASES = {
