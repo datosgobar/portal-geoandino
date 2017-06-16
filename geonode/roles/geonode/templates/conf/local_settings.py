@@ -26,10 +26,12 @@ SITEURL = os.environ.get("SITEURL", "http://localhost/")
 
 ALLOWED_HOSTS = [
     'localhost', '127.0.0.1',
+    'geonode',
     os.environ.get("ALLOWED_HOST_IP", '127.0.0.1'), os.environ.get("ALLOWED_HOST_NAME", 'localhost')
 ]
 PROXY_ALLOWED_HOSTS = (
-    'localhost', '127.0.0.1', 
+    'localhost', '127.0.0.1',
+    'geonode',
     os.environ.get("PROXY_ALLOWED_HOST_IP", '127.0.0.1'), os.environ.get("PROXY_ALLOWED_HOST_NAME", 'localhost'), 
 )
 POSTGIS_VERSION = (2, 1, 2)
