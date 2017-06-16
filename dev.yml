@@ -17,6 +17,7 @@ services:
       - ALLOWED_HOST_NAME=localhost
       - PROXY_ALLOWED_HOST_NAME=localhost
       - SITEURL=http://localhost/
+      - GEOSERVER_PUBLIC_LOCATION=http://localhost/geoserver/
     command: run_server.sh
     networks:
       main:
