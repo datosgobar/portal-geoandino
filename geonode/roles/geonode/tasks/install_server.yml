@@ -15,6 +15,7 @@
   pip:
     name: six # Apache does not find six :/
     state: latest
+
 - name: Add apache2 conf
   template:
     src: conf/geonode.conf
@@ -36,8 +37,8 @@
     mode: 0777
     recurse: yes
   with_items:
-    - "{{ geonode_dir }}/geonode/uploaded/thumbs"
-    - "{{ geonode_dir }}/geonode/uploaded/layer"
+    - "{{ geonode_dir }}geonode/uploaded/thumbs"
+    - "{{ geonode_dir }}geonode/uploaded/layer"
 
 - name: Run collect static
   shell: python manage.py collectstatic --noinput

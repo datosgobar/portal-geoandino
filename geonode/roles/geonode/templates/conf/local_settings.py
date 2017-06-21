@@ -61,7 +61,7 @@ GEOSERVER_LOCATION = os.getenv(
     'GEOSERVER_LOCATION', 'http://{{ geoserver_host }}:{{ geoserver_port }}/{{ geoserver_name }}/'
 )
 GEOSERVER_PUBLIC_LOCATION = os.getenv(
-    'GEOSERVER_PUBLIC_LOCATION', 'http://localhost:9000/{{ geoserver_name }}/'
+    'GEOSERVER_PUBLIC_LOCATION', '%s{{ geoserver_name }}/' % SITEURL
 )
 
 # OGC (WMS/WFS/WCS) Server Settings
@@ -116,7 +116,7 @@ CATALOGUE = {
 
         # The FULLY QUALIFIED base url to the CSW instance for this GeoNode
         # 'URL': '%scatalogue/csw' % SITEURL,
-        'URL': 'http://{{ catalog_host }}:{{ catalog_port }}/geonetwork/srv/en/csw',
+        'URL': 'http://{{ catalog_host }}:{{ catalog_port }}/{{ catalog_name }}/srv/en/csw',
         # 'URL': 'http://localhost:8080/deegree-csw-demo-3.0.4/services',
 
         # login credentials (for GeoNetwork)

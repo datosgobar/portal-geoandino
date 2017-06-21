@@ -11,7 +11,6 @@
 - include: configure_apache.yml
 - include: configure_app.yml
 
-# At last
 - name: Add server run scripts
   template:
     src: "bins/{{ item }}"

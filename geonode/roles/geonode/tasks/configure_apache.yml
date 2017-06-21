@@ -19,7 +19,7 @@
 
 - name: Change static owner and group
   file:
-    path: "{{ geonode_dir }}/geonode/static_root/"
+    path: "{{ geonode_dir }}geonode/static_root/"
     owner: www-data
     group: www-data
     recurse: yes
