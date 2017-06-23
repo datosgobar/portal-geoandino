@@ -1,0 +1,7 @@
+---
+
+- name: Copy custom project
+  copy:
+    src: custom
+    dest: "/home/geonode/"
+    

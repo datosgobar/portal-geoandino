@@ -10,6 +10,13 @@ RUN apt-get -y update && \
       apt-get update -y && apt-get install ansible -y && \
       ansible-playbook -i "localhost," -c local /base/playbook.yml -vv && \
       apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ADD ./custom/playbook.yml /custom/
+COPY ./custom/roles /custom/roles
+ADD ./custom/group_vars /custom/group_vars
+RUN ansible-playbook -i "localhost," -c local /custom/playbook.yml -vv && \
+      apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 WORKDIR /home/geonode/geonode
 EXPOSE 80
 CMD ["run_server.sh"]
