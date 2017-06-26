@@ -124,6 +124,13 @@ CATALOGUE = {
         'PASSWORD': 'admin',
     }
 }
+MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(PROJECT_ROOT, "uploaded"))
+
+# Absolute path to the directory that holds static files like app media.
+# Example: "/home/media/media.lawrence.com/apps/"
+STATIC_ROOT = os.getenv('STATIC_ROOT',
+                        os.path.join(PROJECT_ROOT, "static_root")
+                        )
 
 # Default preview library
 #LAYER_PREVIEW_LIBRARY = 'geoext'
