@@ -5,3 +5,88 @@
     src: custom
     dest: "/home/geonode/"
     
+
+- name: Copy local settings
+  copy:
+    src: /home/geonode/geonode/geonode/local_settings.py
+    dest: /home/geonode/custom/custom/local_settings.py
+    remote_src: yes
+
+- name: Update permissions
+  file:
+    path: "{{ custom_dir }}"
+    owner: geonode
+    group: www-data
+    recurse: yes
+    mode: 0777
+
+- name: Run collect static
+  shell: python manage.py collectstatic --noinput
+  args:
+    chdir: "{{ custom_dir }}"
+  become_user: geonode
+
+- name: Update apache conf wsgi
+  lineinfile:
+    path: /etc/apache2/sites-available/geonode.conf
+    regexp: 'WSGIScriptAlias.*'
+    line: 'WSGIScriptAlias / {{ custom_dir }}custom/wsgi.py'
+
+- name: Update apache conf static_root
+  lineinfile:
+    path: /etc/apache2/sites-available/geonode.conf
+    regexp: 'Alias /static/.*'
+    line: 'Alias /static/ {{ custom_dir }}custom/static_root/'
+
+
+- name: Update apache conf uploaded
+  lineinfile:
+    path: /etc/apache2/sites-available/geonode.conf
+    regexp: 'Alias /uploaded/.*'
+    line: Alias /uploaded/ {{ custom_dir }}custom/uploaded/
+
+- name: Update application code directory
+  lineinfile:
+    path: /etc/apache2/sites-available/geonode.conf
+    regexp: '<Directory "/home/geonode/geonode/geonode/">'
+    line: <Directory "{{ custom_dir }}custom/">
+
+- name: Update application code directory
+  lineinfile:
+    path: /etc/apache2/sites-available/geonode.conf
+    regexp: '<Directory "/home/geonode/geonode/geonode/static_root/">'
+    line: <Directory "{{ custom_dir }}custom/static_root/">
+
+- name: Update application code directory
+  lineinfile:
+    path: /etc/apache2/sites-available/geonode.conf
+    regexp: '<Directory "/home/geonode/geonode/geonode/uploaded/thumbs/">'
+    line: <Directory "{{ custom_dir }}custom/uploaded/thumbs/">
+
+- name: Update apache python-path
+  lineinfile:
+    path: /etc/apache2/sites-available/geonode.conf
+    regexp: '^(.*)python-path=(.*)'
+    line: '\g<1>python-path={{ custom_dir }}:<2>'
+    backrefs: yes
+
+- name: Create default directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: geonode
+    group: www-data
+    mode: 0777
+    recurse: yes
+  with_items:
+    - "{{ custom_dir }}geonode/uploaded/thumbs"
+    - "{{ custom_dir }}geonode/uploaded/layer"
+
+
+- name: Change static owner and group
+  file:
+    path: "{{ custom_dir }}geonode/static_root/"
+    owner: www-data
+    group: www-data
+    recurse: yes
+    state: directory
