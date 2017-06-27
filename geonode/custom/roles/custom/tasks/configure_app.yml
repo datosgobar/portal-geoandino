@@ -3,5 +3,5 @@
 - name: Copy django settings file
   template:
     src: conf/local_settings.py
-    dest: "{{ geonode_dir }}geonode/local_settings.py"
+    dest: "{{ custom_app }}local_settings.py"
   become_user: geonode

@@ -3,15 +3,3 @@
 geonode_home: /home/geonode/
 geonode_dir: "{{ geonode_home }}geonode/"
 geonode_host: geonode
-
-database_host: db
-data_db_name: geonode_data
-
-geoserver_host: geoserver
-geoserver_name: geoserver
-geoserver_port: 8080
-geoserver_url: "http://{{ geoserver_host }}:{{ geoserver_port }}/"
-
-catalog_host: geonetwork
-catalog_port: 8080
-catalog_name: geonetwork
