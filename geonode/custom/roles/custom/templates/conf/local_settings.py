@@ -21,6 +21,7 @@
 import os
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+PROJECT_DIR = os.path.dirname(os.path.dirname(PROJECT_ROOT))
 
 SITEURL = os.environ.get("SITEURL", "http://localhost/")
 
@@ -124,12 +125,12 @@ CATALOGUE = {
         'PASSWORD': 'admin',
     }
 }
-MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(PROJECT_ROOT, "uploaded"))
+MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(PROJECT_DIR, "uploaded"))
 
 # Absolute path to the directory that holds static files like app media.
 # Example: "/home/media/media.lawrence.com/apps/"
 STATIC_ROOT = os.getenv('STATIC_ROOT',
-                        os.path.join(PROJECT_ROOT, "static_root")
+                        os.path.join(PROJECT_DIR, "static_root")
                         )
 
 # Default preview library

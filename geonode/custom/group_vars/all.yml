@@ -1,7 +1,11 @@
 ---
 
+geonode_home: /home/geonode/
 custom_dir: "/home/geonode/custom/"
 custom_app: "{{ custom_dir }}custom/"
+
+static_dir: "{{ geonode_home }}static_root/"
+media_dir: "{{ geonode_home }}uploaded/"
 
 database_host: db
 data_db_name: geonode_data

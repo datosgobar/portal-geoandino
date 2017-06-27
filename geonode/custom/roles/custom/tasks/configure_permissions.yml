@@ -8,7 +8,6 @@
     recurse: yes
     mode: 0777
 
-
 - name: Create upload directories
   file:
     path: "{{ item }}"
@@ -18,13 +17,13 @@
     mode: 0777
     recurse: yes
   with_items:
-    - "{{ custom_app }}uploaded/thumbs"
-    - "{{ custom_app }}uploaded/layer"
+    - "{{ media_dir }}thumbs"
+    - "{{ media_dir }}layer"
 
 
 - name: Change static owner and group
   file:
-    path: "{{ custom_app }}static_root/"
+    path: "{{ static_dir }}"
     owner: www-data
     group: www-data
     recurse: yes
