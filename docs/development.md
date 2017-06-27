@@ -9,6 +9,10 @@ Luego de que el proceso termine, hay que inicializar la aplicacion:
 
      docker-compose -f dev.yml exec geonode python manage.py migrate
 
+Ahora se pueden cargar los datos iniciales de la aplicacion:
+
+     docker-compose -f dev.yml exec geonode python manage.py loaddata /home/geonode/geonode/geonode/base/fixtures
+
 Para crear un nuevo usuario administrador en la aplicacion:
 
      docker-compose -f dev.yml exec geonode python manage.py createsuperuser
