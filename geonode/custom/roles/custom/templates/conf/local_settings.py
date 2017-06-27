@@ -135,3 +135,7 @@ STATIC_ROOT = os.getenv('STATIC_ROOT',
 
 # Default preview library
 #LAYER_PREVIEW_LIBRARY = 'geoext'
+
+# Custom settings
+
+MODIFY_TOPICCATEGORY = True
