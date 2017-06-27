@@ -8,4 +8,4 @@
 
 ## Desarrollo
 
-Ver la documentacion de [desarrollo](docs/development.md)
+Ver la documentacion de [desarrollo](/docs/development.md)
