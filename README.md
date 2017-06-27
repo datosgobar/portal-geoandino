@@ -53,7 +53,7 @@ Implementación de [geonode](http://geonode.org/) en Docker.
 ## Documentation
 
 
-Ver documentación de [instalación](docs/index.md)
+Ver la [documentación](docs/index.md)
 
 
 ## Créditos
