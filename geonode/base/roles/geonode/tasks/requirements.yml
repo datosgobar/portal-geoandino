@@ -36,3 +36,8 @@
     - unzip
     - zip
     - vim
+
+- name: Install python six
+  pip:
+    name: six # Apache does not find six :/
+    state: latest

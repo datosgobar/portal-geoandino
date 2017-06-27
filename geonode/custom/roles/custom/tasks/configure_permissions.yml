@@ -1,0 +1,31 @@
+---
+
+- name: Update directory permissions
+  file:
+    path: "{{ custom_dir }}"
+    owner: geonode
+    group: www-data
+    recurse: yes
+    mode: 0777
+
+
+- name: Create upload directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: geonode
+    group: www-data
+    mode: 0777
+    recurse: yes
+  with_items:
+    - "{{ custom_app }}uploaded/thumbs"
+    - "{{ custom_app }}uploaded/layer"
+
+
+- name: Change static owner and group
+  file:
+    path: "{{ custom_app }}static_root/"
+    owner: www-data
+    group: www-data
+    recurse: yes
+    state: directory

@@ -5,3 +5,9 @@
     src: conf/local_settings.py
     dest: "{{ custom_app }}local_settings.py"
   become_user: geonode
+
+- name: Run collect static
+  shell: python manage.py collectstatic --noinput
+  args:
+    chdir: "{{ custom_dir }}"
+  become_user: geonode
