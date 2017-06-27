@@ -139,3 +139,5 @@ STATIC_ROOT = os.getenv('STATIC_ROOT',
 # Custom settings
 
 MODIFY_TOPICCATEGORY = True
+
+DEBUG = os.getenv("DEBUG", False)
