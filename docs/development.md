@@ -17,9 +17,9 @@ Para crear un nuevo usuario administrador en la aplicacion:
 
 (**Nota:** Este procedimiento podria cambiar en un futuro)
 
-Para modificar el aspecto de la aplicacion, primero lea la [documentacion de geonode](https://geonode.readthedocs.io/en/master/tutorials/admin/customize_lookfeel/index.html)
+Para modificar el aspecto de la aplicacion, primero lea la [documentacion de geonode](https://geonode.readthedocs.io/en/master/tutorials/admin/customize_lookfeel/customize/setup_admin.html#customize-the-look-feel)
 
-### Custom css
+### Cambios por css
 
 En el directorio `custom/roles/custom/files` hay un directorio `custom` que corresponde al proyecto instalado como modificacion de geonode.
 El mismo contiene un archivo `.css` de ejemplo llamado [site_base.css](/geonode/custom/roles/custom/files/custom/custom/static/css/site_base.css) y una imagen para ejemplificar como proceder con las modificaciones.
