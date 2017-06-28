@@ -21,4 +21,7 @@ EXPOSE 8080
 
 #Set geonetwork data dir
 COPY ./docker-entrypoint.sh /entrypoint.sh
+
+VOLUME $DATA_DIR
+
 ENTRYPOINT ["/entrypoint.sh"]

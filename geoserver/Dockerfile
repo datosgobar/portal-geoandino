@@ -21,6 +21,8 @@ RUN ansible-playbook -i "localhost," -c local /app/playbook.yml -vv && \
 
 WORKDIR $BASE_DIR/webapps
 
+VOLUME $DATA_DIR
+
 EXPOSE 8080
 
 ENTRYPOINT ["/entrypoint.sh"]
