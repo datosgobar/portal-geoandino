@@ -1,9 +1,22 @@
 ---
 
+- name: Ensure configuration directory
+  file:
+    path: "{{ geonode_home }}conf"
+    state: directory
+  become_user: geonode
+
 - name: Copy django settings file
   template:
     src: conf/local_settings.py
+    dest: "{{ geonode_home }}conf/local_settings.py"
+  become_user: geonode
+
+- name: Create configuration link
+  file:
+    src: "{{ geonode_home }}conf/local_settings.py"
     dest: "{{ custom_app }}local_settings.py"
+    state: link
   become_user: geonode
 
 - name: Run collect static
