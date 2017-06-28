@@ -1,8 +1,14 @@
 ---
 
 geonode_home: /home/geonode/
+
+configuration_dir: "{{ geonode_home }}conf/"
+settings_file: "{{ configuration_dir }}local_settings.py"
+bins_dir: "{{ geonode_home }}bins/"
+
 custom_dir: "/home/geonode/custom/"
 custom_app: "{{ custom_dir }}custom/"
+settings_link: "{{ custom_app }}local_settings.py"
 
 static_dir: "{{ geonode_home }}static_root/"
 media_dir: "{{ geonode_home }}uploaded/"
