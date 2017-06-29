@@ -19,6 +19,7 @@
 #########################################################################
 
 import os
+from geonode.settings import MAP_BASELAYERS
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 PROJECT_DIR = os.path.dirname(os.path.dirname(PROJECT_ROOT))
@@ -62,7 +63,7 @@ GEOSERVER_LOCATION = os.getenv(
     'GEOSERVER_LOCATION', 'http://{{ geoserver_host }}:{{ geoserver_port }}/{{ geoserver_name }}/'
 )
 GEOSERVER_PUBLIC_LOCATION = os.getenv(
-    'GEOSERVER_PUBLIC_LOCATION', '%s{{ geoserver_name }}/' % SITEURL
+    'GEOSERVER_PUBLIC_LOCATION', 'http://{{ geoserver_host }}:{{ geoserver_port }}/{{ geoserver_name }}/'
 )
 
 # OGC (WMS/WFS/WCS) Server Settings
@@ -141,3 +142,22 @@ STATIC_ROOT = os.getenv('STATIC_ROOT',
 MODIFY_TOPICCATEGORY = True
 
 DEBUG = os.getenv("DEBUG", False)
+
+MAP_BASELAYERS += [{
+    "source": {"ptype": "gxp_olsource"},
+    "type": "OpenLayers.Layer.WMS",
+    "args": [
+        'ING',
+        'http://wms.ign.gob.ar/geoserver/wms',
+        {
+          'layers': ['capabaseargenmap'],
+          "format":"image/png",
+          "tiled": True,
+          "tilesOrigin": [-20037508.34, -20037508.34],
+        },
+
+    ],
+    "visibility": False,
+    "fixed": True,
+    "group": "background"
+}]
