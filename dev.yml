@@ -18,8 +18,6 @@ services:
       - PROXY_ALLOWED_HOST_NAME=localhost
       - SITEURL=http://localhost/
       - DEBUG=1
-      - GEOSERVER_PUBLIC_LOCATION=http://localhost/geoserver/ # GKW This is required!
-      - GEOSERVER_LOCATION=http://geoserver:8080/geoserver/ # GKW This is required!
     command: run_server.sh
     networks:
       main:
