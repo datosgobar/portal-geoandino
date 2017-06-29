@@ -1,6 +1,7 @@
 # Desarrollo
 
 ## Levantar la aplicacion
+
 Para levantar la aplicacion en modo desarrolo, basta con correr el siguiente comando:
 
     docker-compose -f dev.yml up -d --build

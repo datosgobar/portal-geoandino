@@ -1,3 +1,4 @@
+# Geoandino
 
 Implementación de [geonode](http://geonode.org/) en Docker.
 
@@ -16,7 +17,6 @@ Implementación de [geonode](http://geonode.org/) en Docker.
 + [PostgreSQL](https://www.postgresql.org/)
 + [Postgis](http://postgis.net/)
 + [Apache](https://httpd.apache.org/)
-
 
 ## Dependencias
 
@@ -49,12 +49,9 @@ Implementación de [geonode](http://geonode.org/) en Docker.
 
 ---
 
-
 ## Documentation
 
-
 Ver la [documentación](docs/index.md)
-
 
 ## Créditos
 
@@ -62,10 +59,8 @@ Este trabajo está inspirado en el desarrollo hecho por:
 
 + [geonode.org](http://geonode.org/)
 
-
 ## Contacto
 
 Te invitamos a [crearnos un issue](https://github.com/datosgobar/geonode/issues/new?title=Encontre%20un%20bug%20en%20nombre-del-repo) en caso de que encuentres algún bug o tengas feedback de alguna parte del proyecto.
 
 Para todo lo demás, podés mandarnos tu comentario o consulta a [datos@modernizacion.gob.ar](mailto:datos@modernizacion.gob.ar).
-
