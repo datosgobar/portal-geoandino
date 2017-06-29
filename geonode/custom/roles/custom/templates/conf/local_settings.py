@@ -63,7 +63,7 @@ GEOSERVER_LOCATION = os.getenv(
     'GEOSERVER_LOCATION', 'http://{{ geoserver_host }}:{{ geoserver_port }}/{{ geoserver_name }}/'
 )
 GEOSERVER_PUBLIC_LOCATION = os.getenv(
-    'GEOSERVER_PUBLIC_LOCATION', 'http://{{ geoserver_host }}:{{ geoserver_port }}/{{ geoserver_name }}/'
+    'GEOSERVER_PUBLIC_LOCATION', "%s{{ geoserver_name }}/" % SITEURL
 )
 
 # OGC (WMS/WFS/WCS) Server Settings
@@ -143,21 +143,54 @@ MODIFY_TOPICCATEGORY = True
 
 DEBUG = os.getenv("DEBUG", False)
 
-MAP_BASELAYERS += [{
-    "source": {"ptype": "gxp_olsource"},
-    "type": "OpenLayers.Layer.WMS",
-    "args": [
-        'ING',
-        'http://wms.ign.gob.ar/geoserver/wms',
-        {
-          'layers': ['capabaseargenmap'],
-          "format":"image/png",
-          "tiled": True,
-          "tilesOrigin": [-20037508.34, -20037508.34],
-        },
 
-    ],
-    "visibility": False,
-    "fixed": True,
-    "group": "background"
-}]
+LOCAL_GEOSERVER = {
+        "source": {
+            "ptype": "gxp_wmscsource",
+            "url": OGC_SERVER['default']['PUBLIC_LOCATION'] + "wms",
+            "restUrl": "/gs/rest"
+        }
+    }
+
+# Disable by default
+DEFAULT_OPENSTREET_MAP = {
+        "source": {"ptype": "gxp_osmsource"},
+        "type": "OpenLayers.Layer.OSM",
+        "name": "mapnik",
+        "visibility": True,
+        "fixed": True,
+        "group": "background"
+    }
+
+IGN_GEOSERVER = {
+        "source": {"ptype": "gxp_olsource"},
+        "type": "OpenLayers.Layer.WMS",
+        "args": [
+            'ING',
+            'http://wms.ign.gob.ar/geoserver/wms',
+            {
+            'layers': ['capabaseargenmap'],
+            "format":"image/png",
+            "tiled": True,
+            "tilesOrigin": [-20037508.34, -20037508.34],
+            },
+
+        ],
+        "visibility": True,
+        "fixed": True,
+        "group": "background",
+    }
+
+MAP_BASELAYERS = [
+    LOCAL_GEOSERVER,
+    {
+        "source": {"ptype": "gxp_olsource"},
+        "type": "OpenLayers.Layer",
+        "args": ["No background"],
+        "name": "background",
+        "visibility": False,
+        "fixed": True,
+        "group":"background"
+    },
+    IGN_GEOSERVER,
+]
