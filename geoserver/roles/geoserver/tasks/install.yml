@@ -1,0 +1,14 @@
+---
+
+- name: Install requirements
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - wget
+    - vim
+
+- name: Get geoserver.war
+  get_url:
+    url: http://build.geonode.org/geoserver/latest/geoserver-{{ geoserver_version }}.war
+    dest: "{{ webapps_dir }}geoserver.war"

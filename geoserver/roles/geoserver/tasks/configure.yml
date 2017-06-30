@@ -1,0 +1,36 @@
+---
+
+- name: Generate geoserver files
+  shell: sh /entrypoint.sh
+  async: 15
+  poll: 0
+
+- name: wait for file web.xml is created
+  wait_for:
+    path: "{{ web_xml_file }}"
+
+- name: Add geonode GEONODE_BASE_URL
+  blockinfile:
+    path: "{{ web_xml_file }}"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    insertafter: "<display-name>GeoServer</display-name>"
+    content: |
+      <context-param>
+        <param-name>GEONODE_BASE_URL</param-name>
+        <param-value>http://{{ geonode_host }}/</param-value>
+      </context-param>
+
+- name: Add baseUrl in geonode auth provider
+  lineinfile:
+    path: "{{ config_xml_file }}"
+    regexp: '.*baseUrl.*'
+    line: '<baseUrl>http://{{ geonode_host }}/</baseUrl>'
+
+- name: Add configuration scripts
+  template:
+    src: scripts/add_printing_host.sh
+    dest: /usr/local/bin/
+    mode: 0770
+
+- name: Add IGN to allowed to print hosts
+  shell: /usr/local/bin/add_printing_host.sh wms.ign.gob.ar
