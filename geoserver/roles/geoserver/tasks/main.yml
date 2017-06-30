@@ -1,9 +1,12 @@
 ---
 
-- name: Install wget
+- name: Install requirements
   apt:
-    name: wget
+    name: "{{ item }}"
     update_cache: yes
+  with_items:
+    - wget
+    - vim
 
 - name: Get geoserver.war
   get_url:
@@ -35,4 +38,15 @@
   lineinfile:
     path: "{{ config_xml_file }}"
     regexp: '.*baseUrl.*'
-    line: '<baseUrl>http://{{ geonode_host }}/</baseUrl>'  
+    line: '<baseUrl>http://{{ geonode_host }}/</baseUrl>'
+
+- name: Add IGN to allowed to print hosts
+  blockinfile:
+    path: "{{ printing_xml_file }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    insertbefore: '- !localMatch'
+    content: |2
+        - !dnsMatch
+          host: wms.ign.gob.ar
+          port: 80
+    

@@ -4,7 +4,7 @@ FROM tomcat:7.0-jre8
 ENV GS_VERSION=2.9.x \
     GS_FILE=geoserver.war \
     BASE_DIR=/usr/local/tomcat \
-    DATA_DIR=$BASE_DIR/webapps/geoserver/WEB-INF/data \
+    DATA_DIR=$BASE_DIR/webapps/geoserver/data \
     JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Xmx512M -Xss2M -XX:MaxPermSize=512m -XX:+UseConcMarkSweepGC" \
     ANSIBLE_SERVER_KEY=93C4A3FD7BB9C367
 
