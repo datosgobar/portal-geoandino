@@ -2,7 +2,7 @@
 
 - name: Update directory permissions
   file:
-    path: "{{ custom_dir }}"
+    path: "{{ geoandino_dir }}"
     owner: geonode
     group: www-data
     recurse: yes

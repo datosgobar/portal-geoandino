@@ -20,7 +20,7 @@ Para crear un nuevo usuario administrador en la aplicacion:
 
 ## Cambios en el aspecto
 
-(**Nota:** Este procedimiento podria cambiar en un futuro)
+**TODO:** Actualizar esta parte!
 
 Para modificar el aspecto de la aplicacion, primero lea la [documentacion de geonode](https://geonode.readthedocs.io/en/master/tutorials/admin/customize_lookfeel/customize/theme_admin.html)
 

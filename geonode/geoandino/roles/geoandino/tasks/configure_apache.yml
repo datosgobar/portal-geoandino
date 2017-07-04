@@ -19,7 +19,7 @@
 
 - name: Change static owner and group
   file:
-    path: "{{ custom_app }}static_root/"
+    path: "{{ geoandino_app }}static_root/"
     owner: www-data
     group: www-data
     recurse: yes

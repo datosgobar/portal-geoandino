@@ -15,13 +15,13 @@ RUN apt-get -y update && \
       ansible-playbook -i "localhost," -c local /base/playbook.yml -vv && \
       apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD ./custom/playbook.yml /custom/
-COPY ./custom/roles /custom/roles
-ADD ./custom/group_vars /custom/group_vars
-RUN ansible-playbook -i "localhost," -c local /custom/playbook.yml -vv && \
+ADD ./geoandino/playbook.yml /geoandino/
+COPY ./geoandino/roles /geoandino/roles
+ADD ./geoandino/group_vars /geoandino/group_vars
+RUN ansible-playbook -i "localhost," -c local /geoandino/playbook.yml -vv && \
       apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-WORKDIR /home/geonode/custom
+WORKDIR /home/geonode/geoandino
 
 VOLUME $MEDIA_DIR $STATIC_DIR $CONFIG_DIR
 

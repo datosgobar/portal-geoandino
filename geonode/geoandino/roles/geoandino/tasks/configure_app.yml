@@ -29,5 +29,5 @@
 - name: Run collect static
   shell: python manage.py collectstatic --noinput
   args:
-    chdir: "{{ custom_dir }}"
+    chdir: "{{ geoandino_dir }}"
   become_user: geonode
