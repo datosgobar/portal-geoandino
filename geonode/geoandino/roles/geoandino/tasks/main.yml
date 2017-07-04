@@ -4,7 +4,7 @@
   git:
     repo: 'https://github.com/datosgobar/geoandino-theme.git'
     dest: /home/geonode/geoandino
-    version: master
+    version: 0.1
 
 - include: configure_apache.yml
 - include: configure_app.yml
