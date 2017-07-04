@@ -26,6 +26,12 @@
     regexp: '.*baseUrl.*'
     line: '<baseUrl>http://{{ geonode_host }}/</baseUrl>'
 
+- name: GeoServer Worker Threads
+  lineinfile:
+    path: "{{ tomcat_server_xml }}"
+    insertafter: '.*Connector port="8080".*'
+    line: 'maxThreads="50"'
+
 - name: Add configuration scripts
   template:
     src: scripts/add_printing_host.sh
