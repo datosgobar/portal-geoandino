@@ -25,6 +25,8 @@ services:
       - db
     ports:
       - "80:80"
+    volumes:
+      - $PWD:/development
   geonetwork:
     build: geonetwork
     networks:
