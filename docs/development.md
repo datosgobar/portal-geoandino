@@ -58,3 +58,41 @@ Entones, si se quiere cambiar a la versión `0.1-release`, basta con cambiar la 
     dest: /home/geonode/geoandino
     version: 0.1-release
 ```
+
+### Avanzado
+
+Para trabajar con el repositorio del tema directamente montado en el contenedor, se pueden seguir los siguientes pasos.
+(NOTA: `$THEME_PATH` hace referencia al repositorio del tema en la máquina `host`, no en el conenedor)
+
+Primero hay que levantar los servicios:
+
+    docker build -t db postgres/
+    docker build -t geoserver geoserver/
+    docker build -t geonetwork geonetwork/
+    docker run --name db -e POSTGRES_USER=geonode \
+        -e POSTGRES_PASSWORD=geonode \
+        -e DATASTORE_DB=geonode_data -d db
+    docker run --name geoserver -d geoserver
+    docker run --name geonetwork -d geonetwork
+
+Luego contruir la imagen de la aplicación (Este paso puede tardar bastante):
+
+    docker build -t geonode geonode/
+
+Luego levantar la aplicación con los servicios y el repositorio montado.
+
+    docker run -v $THEME_PATH:/home/geonode/geoandino \
+        --link "db:db" --link "geonetwork:geonetwork" \
+        --link "geoserver:geoserver" \
+        -p 80:80 -it geonode /bin/bash
+
+Luego, desde dentro del contenedor, hay que configurar y reiniciar la aplicación:
+
+    /home/geonode/bins/link_settings.sh
+    python manage.py migrate
+    apachectl restart
+
+Si se cambian los archivos estáticos, deben correrse los comandos:
+
+    python manage.py collectstatic
+    apachectl restart
