@@ -1,8 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER Leandro Gomez <leandro.gz73@gmail.com>
 
-ENV MEDIA_DIR=/home/geonode/static_root/ \
-      STATIC_DIR=/home/geonode/uploaded/ \
+ENV MEDIA_DIR=/home/geonode/uploaded/ \
       CONFIG_DIR=/home/geonode/conf
 
 ADD ./base/playbook.yml /base/
@@ -23,7 +22,7 @@ RUN ansible-playbook -i "localhost," -c local /geoandino/playbook.yml -vv && \
 
 WORKDIR /home/geonode/geoandino
 
-VOLUME $MEDIA_DIR $STATIC_DIR $CONFIG_DIR
+VOLUME $MEDIA_DIR $CONFIG_DIR
 
 EXPOSE 80
 CMD ["run_server.sh"]
