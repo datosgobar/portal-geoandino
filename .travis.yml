@@ -34,8 +34,13 @@ script:
   - time docker-compose -f dev.yml exec geonode python manage.py test
 
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: "deploy/upload.sh"
-  on:
-    tags: true
+  - provider: script
+    skip_cleanup: true
+    script: "deploy/upload.sh $TRAVIS_BRANCH"
+    on:
+      tags: true
+  - provider: script
+    skip_cleanup: true
+    script: "deploy/upload.sh latest"
+    on:
+      branch: master

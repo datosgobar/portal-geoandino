@@ -3,7 +3,8 @@
 set -ev
 
 container_image=$(docker-compose -f dev.yml images -q geonode)
-tag="$TRAVIS_BRANCH"
+
+tag="$1"
 
 image_full_name="datosgobar/portal-geoandino:$tag"
 docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASS";
