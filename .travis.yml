@@ -1,6 +1,13 @@
+language: python
+
 sudo: required
+dist: trusty
+group: edge
+
 env:
-  DOCKER_COMPOSE_VERSION: 1.13.0
+  global:
+    - DOCKER_COMPOSE_VERSION="1.13.0"
+
 services:
   - docker
 
