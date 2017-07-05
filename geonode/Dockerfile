@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Leandro Gomez <leandro.gz73@gmail.com>
+MAINTAINER Leandro Gomez <lgomez@devartis.com>
 
 ENV MEDIA_DIR=/home/geonode/uploaded/ \
       CONFIG_DIR=/home/geonode/conf
