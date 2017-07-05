@@ -20,10 +20,10 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - docker-compose -f dev.yml up -d --build
+  - time docker-compose -f dev.yml up -d --build
 
 script:
-  - docker-compose -f dev.yml exec geonode python manage.py test
+  - time docker-compose -f dev.yml exec geonode python manage.py test
 
 deploy:
   provider: script
