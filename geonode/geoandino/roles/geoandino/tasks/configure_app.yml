@@ -11,11 +11,15 @@
 
 - name: Add link settings script
   template:
-    src: bins/link_settings.sh
-    dest: "{{ bins_dir }}link_settings.sh"
+    src: "bins/{{ item }}"
+    dest: "{{ bins_dir }}{{ item }}"
     mode: 0770
     owner: geonode
     group: geonode
+  with_items:
+    - link_settings.sh
+    - wait-for-it.sh
+    - wait-for-services.sh
 
 - name: Copy django settings file
   template:

@@ -21,6 +21,7 @@ before_install:
 
 before_script:
   - time docker-compose -f dev.yml up -d --build
+  - time docker-compose -f dev.yml exec geonode /home/geonode/bins/wait-for-services.sh
 
 script:
   - time docker-compose -f dev.yml exec geonode python manage.py test
