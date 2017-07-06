@@ -41,7 +41,7 @@ POSTGIS_VERSION = (2, 1, 2)
 DATABASES = {
     'default': {
          'ENGINE': 'django.db.backends.postgresql_psycopg2',
-         'NAME': 'geonode',
+         'NAME': os.getenv('POSTGRES_DB'),
          'USER': os.getenv('POSTGRES_USER'),
          'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
          'HOST' : '{{ database_host }}',

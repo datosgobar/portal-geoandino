@@ -1,12 +1,13 @@
-version: '3'
+version: '3.1'
 
 services:
   db:
     build: postgres
     environment:
-      POSTGRES_USER: geonode
-      POSTGRES_PASSWORD: geonode
-      DATASTORE_DB: geonode_data
+      - POSTGRES_USER=geoandino_user
+      - POSTGRES_PASSWORD=geoandino_pass
+      - POSTGRES_DB=geoandino_db
+      - DATASTORE_DB=geoandino_data
     networks:
       main:
   geonode:
@@ -18,10 +19,10 @@ services:
       - PROXY_ALLOWED_HOST_NAME=localhost
       - SITEURL=http://localhost/
       - DEBUG=1
-      - POSTGRES_USER=geonode
-      - POSTGRES_PASSWORD=geonode
-      - DATASTORE_DB=geonode_data
-    command: run_server.sh
+      - POSTGRES_USER=geoandino_user
+      - POSTGRES_PASSWORD=geoandino_pass
+      - POSTGRES_DB=geoandino_db
+      - DATASTORE_DB=geoandino_data
     networks:
       main:
     depends_on:
