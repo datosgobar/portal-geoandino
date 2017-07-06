@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+  db:
+    image: datosgobar/portal-geoandino-postgres:latest
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - DATASTORE_DB
+    networks:
+      main:
+  geonode:
+    image: datosgobar/portal-geoandino:latest
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - DATASTORE_DB
+      - ALLOWED_HOST_IP
+      - PROXY_ALLOWED_HOST_IP
+      - ALLOWED_HOST_NAME
+      - PROXY_ALLOWED_HOST_NAME
+      - SITEURL
+    networks:
+      main:
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+  geonetwork:
+    image: datosgobar/portal-geoandino-geonetwork:latest
+    networks:
+      main:
+  geoserver:
+    image: datosgobar/portal-geoandino-geoserver:latest
+    networks:
+      main:
+
+networks:
+  main:
