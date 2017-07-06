@@ -1,5 +1,7 @@
 # Geoandino
 
+[![Build Status](https://travis-ci.org/datosgobar/portal-geoandino.svg?branch=master)](https://travis-ci.org/datosgobar/portal-geoandino)
+
 Implementación de [geonode](http://geonode.org/) en Docker.
 
 ## Índice
