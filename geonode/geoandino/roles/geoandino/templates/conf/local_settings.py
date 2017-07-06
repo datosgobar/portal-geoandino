@@ -42,8 +42,8 @@ DATABASES = {
     'default': {
          'ENGINE': 'django.db.backends.postgresql_psycopg2',
          'NAME': 'geonode',
-         'USER': 'geonode',
-         'PASSWORD': 'geonode',
+         'USER': os.getenv('POSTGRES_USER'),
+         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
          'HOST' : '{{ database_host }}',
          'PORT' : '5432',
      },
@@ -51,9 +51,9 @@ DATABASES = {
     'datastore' : {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         #'ENGINE': '', # Empty ENGINE name disables
-        'NAME': '{{ data_db_name }}',
-        'USER' : 'geonode',
-        'PASSWORD' : 'geonode',
+        'NAME': os.getenv('DATASTORE_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST' : '{{ database_host }}',
         'PORT' : '5432',
     }

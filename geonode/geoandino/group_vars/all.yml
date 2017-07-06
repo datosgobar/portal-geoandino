@@ -15,7 +15,6 @@ media_dir: "{{ geonode_home }}uploaded/"
 
 database_host: db
 database_port: 5432
-data_db_name: geonode_data
 
 geoserver_host: geoserver
 geoserver_name: geoserver

@@ -82,6 +82,8 @@ Luego contruir la imagen de la aplicación (Este paso puede tardar bastante):
 Luego levantar la aplicación con los servicios y el repositorio montado.
 
     docker run -v $THEME_PATH:/home/geonode/geoandino \
+        -e POSTGRES_USER=geonode \ -e POSTGRES_PASSWORD=geonode \
+        -e DATASTORE_DB=geonode_data
         --link "db:db" --link "geonetwork:geonetwork" \
         --link "geoserver:geoserver" \
         -p 80:80 -it geonode /bin/bash

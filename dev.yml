@@ -18,6 +18,9 @@ services:
       - PROXY_ALLOWED_HOST_NAME=localhost
       - SITEURL=http://localhost/
       - DEBUG=1
+      - POSTGRES_USER=geonode
+      - POSTGRES_PASSWORD=geonode
+      - DATASTORE_DB=geonode_data
     command: run_server.sh
     networks:
       main:
