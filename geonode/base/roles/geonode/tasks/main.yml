@@ -7,8 +7,6 @@
     name: geonode
     comment: "Geonode application user"
 
-- include: install_server.yml
-
 - name: Add server run scripts
   template:
     src: "bins/{{ item }}"
