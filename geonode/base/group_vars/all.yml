@@ -1,5 +1,0 @@
----
-
-geonode_home: /home/geonode/
-geonode_dir: "{{ geonode_home }}geonode/"
-geonode_host: geonode
