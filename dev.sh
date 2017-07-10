@@ -48,7 +48,9 @@ sub_sync() {
         sub_cp "$path/." /home/geonode/geoandino
     else            
         echo "Los archivos del tema deben estar en $(dirname $PWD)/$themedir"
+        exit 1;
     fi
+    sub_restart;
 }
 
 sub_cp(){
