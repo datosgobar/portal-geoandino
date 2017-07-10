@@ -1,18 +1,19 @@
 #!/bin/bash
-set -e
 
 ProgName=$(basename $0);
 geoandino_name="geonode";
 
 sub_help(){
-    echo "Uso: $ProgName <subcomando> [opciones]"
+    echo "Uso: $ProgName <subcomando>"
     echo "Subcomandos:"
     echo "    up                Levantar la aplicacion (Regenerar si es necesario)"
     echo "    migrate           Migrar la base de datos"
     echo "    test              Correr los tests de la aplicacion"
+    echo "    restart           Reiniciar el servicor apache"
     echo "    down              Borrar la aplicacion y sus datos"
     echo "    cp <file> <dest>  Copiar archivo dentro del contenedor"
     echo "    console           Entrar en la consola del contenedor"
+    echo "    ux                Comandos utiles para desarrollo ux"
     echo ""
 }
   
@@ -22,6 +23,10 @@ sub_up(){
   
 sub_down(){
     docker-compose -f dev.yml down -v;
+}
+
+sub_restart() {
+    docker-compose -f dev.yml restart $geoandino_name;
 }
 
 sub_migrate(){
@@ -34,6 +39,42 @@ sub_test() {
 
 sub_console() {
     docker-compose -f dev.yml exec $geoandino_name bash;
+}
+
+sub_ux_sync() {
+    themedir="geoandino-theme"
+    path="../$themedir";
+    if [ -d "$path" ]; then
+        sub_cp "$path/." /home/geonode/geoandino
+    else            
+        echo "Los archivos del tema deben estar en $(dirname $PWD)/$themedir"
+    fi
+}
+
+sub_ux_help() {
+    echo "Uso: $ProgName ux <subcomando>"
+    echo "Comandos para facilitar el desarrollo de ux."
+    echo "Subcomandos:"
+    echo "    sync                Copiar los archivos del tema."
+    echo ""
+}
+
+sub_ux() {
+    subcommand=$1
+    case $subcommand in
+        "" | "-h" | "--help")
+            sub_ux_help
+            ;;
+        *)
+            shift
+            sub_ux_${subcommand} $@
+            if [ $? = 127 ]; then
+                echo "Error: '$subcommand' no es un subcomando conocido." >&2
+                echo "       Corre '$ProgName ux --help' para listar los comandos." >&2
+                exit 1
+            fi
+            ;;
+    esac
 }
 
 sub_cp(){
