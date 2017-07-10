@@ -1,0 +1,34 @@
+---
+
+- name: Add geonode user
+  user:
+    name: geonode
+    comment: "Geonode application user"
+
+- name: Add server run scripts
+  template:
+    src: "bins/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: u+x,g+x,o+x
+  with_items:
+    - run_server.sh
+
+- include: requirements.yml
+
+- name: Clone geoandino theme
+  git:
+    repo: 'https://github.com/datosgobar/geoandino-theme.git'
+    dest: /home/geonode/geoandino
+    version: 0.1
+
+- name: Install geoandino
+  pip:
+    requirements: "{{ geoandino_dir }}requirements.txt"
+
+- name: Install python requirements
+  pip:
+    name: "{{ geoandino_dir }}"
+
+- include: configure_apache.yml
+- include: configure_app.yml
+- include: configure_permissions.yml

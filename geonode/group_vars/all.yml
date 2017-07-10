@@ -1,6 +1,8 @@
 ---
 
 geonode_home: /home/geonode/
+geonode_dir: "{{ geonode_home }}geonode/"
+geonode_host: geonode
 
 configuration_dir: "{{ geonode_home }}conf/"
 settings_file: "{{ configuration_dir }}local_settings.py"

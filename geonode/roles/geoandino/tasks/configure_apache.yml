@@ -16,7 +16,6 @@
 - name: Enable geonode site
   shell: a2ensite geonode
 
-
 - name: Change static owner and group
   file:
     path: "{{ geoandino_app }}static_root/"
