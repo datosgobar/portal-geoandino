@@ -57,6 +57,15 @@ sub_console() {
     sub_exec bash;
 }
 
+sub_link() {
+    sub_exec bash /home/geonode/bins/link_settings.sh
+}
+
+sub_collectstatic(){
+    sub_exec python manage.py collectstatic --noinput
+    sub_exec chown -R www-data:www-data /home/geonode/static_root/
+}
+
 sub_db_console() {
     sub_db_exec bash
 }
@@ -91,15 +100,22 @@ sub_cp(){
 
 
 sub_sync() {
+
     themedir="geoandino-theme"
     path="$(dirname $PWD)/$themedir";
     if [ -d "$path" ]; then
+        sub_exec rm -rf /home/geonode/geoandino/geoandino;
+        sub_exec rm -rf /home/geonode/static_root;
         sub_cp "$path/." /home/geonode/geoandino
+        sub_link
+        sub_exec python setup.py install;
+        sub_collectstatic
     else
         echo "Los archivos del tema deben estar en $path"
         exit 1;
     fi
     sub_restart;
+
 }
 
 subcommand=$1
