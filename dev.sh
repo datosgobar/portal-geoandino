@@ -43,11 +43,11 @@ sub_console() {
 
 sub_sync() {
     themedir="geoandino-theme"
-    path="../$themedir";
+    path="$(dirname $PWD)/$themedir";
     if [ -d "$path" ]; then
         sub_cp "$path/." /home/geonode/geoandino
     else            
-        echo "Los archivos del tema deben estar en $(dirname $PWD)/$themedir"
+        echo "Los archivos del tema deben estar en $path"
         exit 1;
     fi
     sub_restart;
