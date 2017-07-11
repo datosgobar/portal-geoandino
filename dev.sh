@@ -8,6 +8,7 @@ sub_help(){
     echo "Subcomandos:"
     echo "    up                Levantar la aplicacion (Regenerar si es necesario)"
     echo "    migrate           Migrar la base de datos"
+    echo "    createadmin       Crear un usuario administrador (admin)"
     echo "    test              Correr los tests de la aplicacion"
     echo "    restart           Reiniciar el servicor apache"
     echo "    down              Borrar la aplicacion y sus datos"
@@ -15,6 +16,14 @@ sub_help(){
     echo "    console           Entrar en la consola del contenedor"
     echo "    sync              Sincronizar el theme (../geoandino-theme) con el container"
     echo ""
+}
+
+sub_exec() {
+    docker-compose -f dev.yml exec $geoandino_name $@;
+}
+
+sub_createadmin() {
+    sub_exec python manage.py createsuperuser --username admin --email admin@admin.com;
 }
   
 sub_up(){
@@ -30,15 +39,15 @@ sub_restart() {
 }
 
 sub_migrate(){
-    docker-compose -f dev.yml exec $geoandino_name python manage.py migrate;
+    sub_exec python manage.py migrate;
 }
 
 sub_test() {
-    docker-compose -f dev.yml exec $geoandino_name python manage.py test;
+    sub_exec python manage.py test;
 }
 
 sub_console() {
-    docker-compose -f dev.yml exec $geoandino_name bash;
+    sub_exec bash;
 }
 
 sub_sync() {
