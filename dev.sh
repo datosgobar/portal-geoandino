@@ -21,24 +21,59 @@ sub_help(){
     echo ""
 }
 
+sub_command() {
+    docker-compose -f dev.yml $@;
+}
+
 sub_up(){
-    docker-compose -f dev.yml up --build -d;
+    sub_command up --build -d $@;
+}
+
+sub_stop(){
+    sub_command stop $@;
 }
   
 sub_down(){
-    docker-compose -f dev.yml down -v;
+    sub_command down -v;
 }
 
 sub_restart() {
-    docker-compose -f dev.yml restart $geoandino_name;
+    sub_command restart $geoandino_name;
 }
 
 sub_exec() {
-    docker-compose -f dev.yml exec $geoandino_name $@;
+    sub_command exec $geoandino_name $@;
+}
+
+_get_name() {
+    docker inspect --format='{{.Name}}' $(docker-compose -f dev.yml ps -q $1) | sed -e 's/^\///'
+}
+
+sub_run_with() {
+    if [ -z "$1" ]; then
+        echo "Falta el directorio a montar."
+        exit 1;
+    fi
+    if [ -z "$2" ]; then
+        echo "Falta el destino del directorio."
+        exit 1;
+    fi
+    db=$(_get_name db);
+    geoserver=$(_get_name geoserver);
+    geonetwork=$(_get_name geonetwork);
+    geoandino_image=$(sub_command images -q $geoandino_name)
+
+    network=$(python -c "import docker; client = docker.from_env(); c = client.containers.get('$db'); print(list(c.attrs['NetworkSettings']['Networks'].keys())[0])")
+    docker run --rm -v "$1:$2" --network $network \
+        -e POSTGRES_USER=geoandino_user -e POSTGRES_PASSWORD=geoandino_pass \
+        -e DATASTORE_DB=geoandino_data -e POSTGRES_DB=geoandino_db \
+        --link "$db:db" --link "$geonetwork:geonetwork" \
+        --link "$geoserver:geoserver" \
+        -p 80:80 -it $geoandino_image /bin/bash
 }
 
 sub_db_exec() {
-    docker-compose -f dev.yml exec $db_name $@;
+    sub_command exec $db_name $@;
 }
 
 sub_createadmin() {
@@ -51,6 +86,10 @@ sub_migrate(){
 
 sub_test() {
     sub_exec python manage.py test;
+}
+
+sub_init() {
+    sub_exec python manage.py loaddata /usr/local/lib/python2.7/dist-packages/geonode/base/fixtures/initial_data.json
 }
 
 sub_console() {
@@ -96,6 +135,10 @@ sub_cp(){
 
     container=$(docker-compose -f dev.yml ps -q $geoandino_name);
     docker cp $1 $container:$2
+}
+
+sub_ux_dev() {
+    sub_up
 }
 
 
