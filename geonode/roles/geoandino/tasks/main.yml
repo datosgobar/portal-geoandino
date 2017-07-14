@@ -21,7 +21,7 @@
     dest: /home/geonode/geoandino
     version: 0.1.1
 
-- name: Install geoandino
+- name: Install geoandino production requirements
   pip:
     requirements: "{{ geoandino_dir }}requirements.txt"
 
