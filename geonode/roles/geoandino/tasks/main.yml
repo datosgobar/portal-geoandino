@@ -19,15 +19,11 @@
   git:
     repo: 'https://github.com/datosgobar/geoandino-theme.git'
     dest: /home/geonode/geoandino
-    version: 0.1
+    version: 0.1.1
 
 - name: Install geoandino
   pip:
     requirements: "{{ geoandino_dir }}requirements.txt"
-
-- name: Install python requirements
-  pip:
-    name: "{{ geoandino_dir }}"
 
 - include: configure_apache.yml
 - include: configure_app.yml
