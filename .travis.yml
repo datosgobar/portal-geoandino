@@ -27,12 +27,12 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - time ./dev.sh -d --build
-  - time ./dev.sh /home/geonode/bins/wait-for-services.sh
-  - time ./dev.sh pip install -r requirements/testing.txt
+  - time ./dev.sh up
+  - time ./dev.sh exec /home/geonode/bins/wait-for-services.sh
+  - time ./dev.sh exec pip install -r requirements/testing.txt
 
 script:
-  - time ./dev.sh python manage.py test
+  - time ./dev.sh test
 
 deploy:
   - provider: script
