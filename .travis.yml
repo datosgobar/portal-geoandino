@@ -27,12 +27,12 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - time docker-compose -f dev.yml up -d --build
-  - time docker-compose -f dev.yml exec geonode /home/geonode/bins/wait-for-services.sh
-  - time docker-compose -f dev.yml exec pip install -r requirements/testing.txt
+  - time ./dev.sh -d --build
+  - time ./dev.sh /home/geonode/bins/wait-for-services.sh
+  - time ./dev.sh pip install -r requirements/testing.txt
 
 script:
-  - time docker-compose -f dev.yml exec geonode python manage.py test
+  - time ./dev.sh python manage.py test
 
 deploy:
   - provider: script
