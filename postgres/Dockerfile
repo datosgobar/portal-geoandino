@@ -1,5 +1,7 @@
 FROM mdillon/postgis:9.6
 
+ENV PGDATA=/var/lib/postgresql/data/pgdata
+
 # Installing postgis in debian is broken. Using image with postgis already installed.
 #FROM postgres:9.6.3 Do not use untill debian dependencies where fixed
 
