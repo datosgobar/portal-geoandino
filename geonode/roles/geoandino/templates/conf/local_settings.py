@@ -103,6 +103,7 @@ OGC_SERVER = {
 #    }
 #}
 
+CATALOG_URL=os.getenv("CATALOG_URL", SITEURL)
 
 CATALOGUE = {
     'default': {
@@ -118,7 +119,7 @@ CATALOGUE = {
 
         # The FULLY QUALIFIED base url to the CSW instance for this GeoNode
         # 'URL': '%scatalogue/csw' % SITEURL,
-        'URL': '%s{{ catalog_name }}/srv/en/csw' % SITEURL,
+        'URL': '%s{{ catalog_name }}/srv/en/csw' % CATALOG_URL,
         # 'URL': 'http://localhost:8080/deegree-csw-demo-3.0.4/services',
 
         # login credentials (for GeoNetwork)
