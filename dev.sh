@@ -23,7 +23,7 @@ sub_help(){
     echo "    Aplicacion en consola:"
     echo "    run_with <src> <dest> Levantar la aplication con un directorio mondado."
     echo "                          Debe tener los servicios levantados (up db geoserver geonetwork)."
-    echo "                          (Recuerde correr `apachectl restart` para levantar apache)."
+    echo "                          (Recuerde correr "apachectl restart" para levantar apache)."
     echo "    Extras:"
     echo "    sync                  Sincronizar el theme (../geoandino-theme) con el container"
     echo ""
@@ -76,6 +76,10 @@ sub_run_with() {
     docker run --rm -v "$1:$2" --network $network \
         -e POSTGRES_USER=geoandino_user -e POSTGRES_PASSWORD=geoandino_pass \
         -e DATASTORE_DB=geoandino_data -e POSTGRES_DB=geoandino_db \
+        -e DEBUG=1 \
+        -e ALLOWED_HOST_IP=127.0.0.1 -e PROXY_ALLOWED_HOST_IP=127.0.0.1 \
+        -e ALLOWED_HOST_NAME=localhost -e PROXY_ALLOWED_HOST_NAME=localhost \
+        -e SITEURL=http://localhost/ \
         --link "$db:db" --link "$geonetwork:geonetwork" \
         --link "$geoserver:geoserver" \
         -p 80:80 -it $geoandino_image /bin/bash
@@ -94,7 +98,8 @@ sub_migrate(){
 }
 
 sub_test() {
-    sub_exec python manage.py test;
+    # TODO: Avoid this variables, implement testing settings
+    sub_exec env CATALOG_URL="http://geonetwork:8080/" python manage.py test;
 }
 
 sub_init() {
