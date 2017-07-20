@@ -118,7 +118,7 @@ CATALOGUE = {
 
         # The FULLY QUALIFIED base url to the CSW instance for this GeoNode
         # 'URL': '%scatalogue/csw' % SITEURL,
-        'URL': 'http://{{ catalog_host }}:{{ catalog_port }}/{{ catalog_name }}/srv/en/csw',
+        'URL': '%s{{ catalog_name }}/srv/en/csw' % SITEURL,
         # 'URL': 'http://localhost:8080/deegree-csw-demo-3.0.4/services',
 
         # login credentials (for GeoNetwork)

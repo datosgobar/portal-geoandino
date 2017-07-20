@@ -26,3 +26,4 @@ geoserver_url: "http://{{ geoserver_host }}:{{ geoserver_port }}/"
 catalog_host: geonetwork
 catalog_port: 8080
 catalog_name: geonetwork
+catalog_url: "http://{{ catalog_host }}:{{ catalog_port }}/"
