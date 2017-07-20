@@ -16,7 +16,7 @@ services:
     build: geonode
     environment:
       - ALLOWED_HOST_IP=127.0.0.1
-      - PROXY_ALLOWED_HOST_IP=127.0.01
+      - PROXY_ALLOWED_HOST_IP=127.0.0.1
       - ALLOWED_HOST_NAME=localhost
       - PROXY_ALLOWED_HOST_NAME=localhost
       - SITEURL=http://localhost/
