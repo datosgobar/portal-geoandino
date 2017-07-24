@@ -98,8 +98,7 @@ sub_migrate(){
 }
 
 sub_test() {
-    # TODO: Avoid this variables, implement testing settings
-    sub_exec env CATALOG_URL="http://geonetwork:8080/" python manage.py test;
+    sub_exec python manage.py test --settings=geoandino.conf.settings.testing;
 }
 
 sub_init() {
