@@ -6,7 +6,6 @@
     state: directory
   become_user: geonode
   with_items:
-    - "{{ configuration_dir }}"
     - "{{ bins_dir }}"
 
 - name: Add link settings script
@@ -17,15 +16,8 @@
     owner: geonode
     group: geonode
   with_items:
-    - link_settings.sh
     - wait-for-it.sh
     - wait-for-services.sh
-
-- name: Copy django settings file
-  template:
-    src: conf/local_settings.py
-    dest: "{{ settings_file }}"
-  become_user: geonode
 
 - name: Run collect static
   shell: python manage.py collectstatic --noinput
