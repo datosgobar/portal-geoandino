@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 ProgName=$(basename $0);
 geoandino_name="geonode";
 db_name="db";
@@ -164,10 +165,13 @@ case $subcommand in
     *)
         shift
         sub_${subcommand} $@
-        if [ $? = 127 ]; then
+        rc=$?
+        if [ $rc = 127 ]; then
             echo "Error: '$subcommand' no es un subcomando conocido." >&2
             echo "       Corre '$ProgName --help' para listar los comandos." >&2
-            exit 1
+            exit 1;
         fi
-        ;;
+        if [ $rc != 0 ]; then
+            exit $rc;
+        fi
 esac
