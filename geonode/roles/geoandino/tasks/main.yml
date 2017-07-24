@@ -19,7 +19,7 @@
   git:
     repo: 'https://github.com/datosgobar/geoandino-theme.git'
     dest: /home/geonode/geoandino
-    version: 0.1.1
+    version: "{{ geoandino_version }}"
 
 - name: Install geoandino production requirements
   pip:

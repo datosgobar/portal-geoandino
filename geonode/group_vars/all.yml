@@ -9,6 +9,7 @@ settings_file: "{{ configuration_dir }}local_settings.py"
 bins_dir: "{{ geonode_home }}bins/"
 
 geoandino_dir: "/home/geonode/geoandino/"
+geoandino_version: "0.1.1"
 geoandino_app: "{{ geoandino_dir }}geoandino/"
 settings_link: "{{ geoandino_app }}local_settings.py"
 
