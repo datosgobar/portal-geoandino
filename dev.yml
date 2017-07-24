@@ -24,6 +24,7 @@ services:
       - POSTGRES_USER=geoandino_user
       - POSTGRES_PASSWORD=geoandino_pass
       - POSTGRES_DB=geoandino_db
+      - POSTGRES_HOST=db
       - DATASTORE_DB=geoandino_data
     networks:
       main:
