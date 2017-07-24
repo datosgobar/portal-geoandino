@@ -27,9 +27,6 @@
     dest: "{{ settings_file }}"
   become_user: geonode
 
-- name: Create configuration link
-  shell: "{{ bins_dir }}link_settings.sh"
-
 - name: Run collect static
   shell: python manage.py collectstatic --noinput
   args:
