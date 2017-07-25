@@ -90,32 +90,35 @@ sub_db_exec() {
     sub_command exec $db_name $@;
 }
 
+sub_manage() {
+    sub_exec python manage.py $@;
+}
+
 sub_createadmin() {
-    sub_exec python manage.py createsuperuser --username admin --email admin@admin.com;
+    sub_manage createsuperuser --username admin --email admin@admin.com;
 }
 
 sub_migrate(){
-    sub_exec python manage.py migrate;
+    # Recommended by https://lists.osgeo.org/pipermail/geonode-users/2016-July/002102.html
+    sub_manage makemigrations;
+    sub_manage migrate account --noinput;
+    sub_manage migrate --noinput;
 }
 
 sub_test() {
-    sub_exec python manage.py test --settings=geoandino.conf.settings.testing;
+    sub_manage test --settings=geoandino.conf.settings.testing;
 }
 
 sub_init() {
-    sub_exec python manage.py loaddata /usr/local/lib/python2.7/dist-packages/geonode/base/fixtures/initial_data.json
+    sub_manage loaddata /usr/local/lib/python2.7/dist-packages/geonode/base/fixtures/initial_data.json
 }
 
 sub_console() {
     sub_exec bash;
 }
 
-sub_link() {
-    sub_exec bash /home/geonode/bins/link_settings.sh
-}
-
 sub_collectstatic(){
-    sub_exec python manage.py collectstatic --noinput
+    sub_manage collectstatic --noinput
     sub_exec chown -R www-data:www-data /home/geonode/static_root/
 }
 
