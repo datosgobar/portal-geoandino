@@ -33,7 +33,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - $PWD:/development
+      - ./:/development
   geonetwork:
     build: geonetwork
     networks:
