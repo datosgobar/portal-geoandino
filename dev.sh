@@ -156,8 +156,7 @@ sub_sync() {
         echo "Los archivos del tema deben estar en $path"
         exit 1;
     fi
-    sub_restart;
-
+    docker exec -it $container apachectl restart
 }
 
 subcommand=$1
