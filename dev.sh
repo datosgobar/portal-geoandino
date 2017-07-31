@@ -71,6 +71,9 @@ sub_run_with() {
     geoserver=$(_get_name geoserver);
     geonetwork=$(_get_name geonetwork);
     sub_stop $geoandino_name
+    echo -e "\e[32mAlgunos comando utiles:\e[39m"
+    echo -e "\e[32mIniciar la app:\e[39m apachectl restart"
+    echo -e "\e[32mVer los logs:\e[39m tail -f /var/logs/apache/error.log"
     echo -e "\e[32mIf it's required, remember to update the statics:\e[39m"
     echo "python manage.py collectstatic --noinput"
     echo "chown -R geonode:www-data ../static_root/"
