@@ -71,6 +71,10 @@ sub_run_with() {
     geoserver=$(_get_name geoserver);
     geonetwork=$(_get_name geonetwork);
     sub_stop $geoandino_name
+    echo -e "\e[32mIf it's required, remember to update the statics:\e[39m"
+    echo "python manage.py collectstatic --noinput"
+    echo "chown -R geonode:www-data ../static_root/"
+    echo "apachectl restart"
     geoandino_image=$(sub_command images -q $geoandino_name)
 
     network=$(python -c "import docker; client = docker.from_env(); c = client.containers.get('$db'); print(list(c.attrs['NetworkSettings']['Networks'].keys())[0])")
