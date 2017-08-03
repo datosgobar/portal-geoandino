@@ -6,6 +6,10 @@ db_name="db";
 APP_DIR=/etc/geoandino
 COMPOSE_FILE="$APP_DIR/docker-compose.yml"
 
+error() {
+    echo -e "\e[31m[ ERROR ]\e[0m $1";
+}
+
 sub_help(){
     echo "Uso: $ProgName <subcomando>"
     echo "Subcomandos:"
@@ -17,8 +21,16 @@ sub_help(){
     echo "    init                  Cargar los datos iniciales de geonode"
     echo "    restart [servicios]   Reiniciar los servicios"
     echo "    stop [servicios]      Detener los servicios"
-    echo "    down                  Borrar la aplicacion y sus datos"
+    echo "    down                  Borrar los datos de la apicación"
+    echo "    explode               Borrar la aplicación"
     echo ""
+}
+
+check_permissions() {
+    if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+      error "Se necesitan permisos de root (sudo)";
+      exit 1;
+    fi
 }
 
 sub_command() {
@@ -62,6 +74,15 @@ sub_migrate(){
 
 sub_init() {
     sub_manage loaddata /usr/local/lib/python2.7/dist-packages/geonode/base/fixtures/initial_data.json
+}
+
+
+
+sub_explode() {
+    check_permissions;
+    sub_down;
+    rm $APP_DIR -rf;
+    rm /usr/local/bin/geoandino-ctl -rf;
 }
 
 subcommand=$1
