@@ -11,10 +11,10 @@ sub_help(){
     echo "Subcomandos:"
     echo "    up [servicios]        Levantar la aplicacion (Regenerar si es necesario)"
     echo "    exec [comandos]       Ejecutar un comando en la aplicacion de geoandino"
-    echo "    manage                Correr comando con ./manage.py"
+    echo "    manage [commandos]    Correr comando con ./manage.py"
+    echo "    wait                  Esperar hasta que las dependencias estén disponibles"
     echo "    migrate               Migrar la base de datos"
     echo "    init                  Cargar los datos iniciales de geonode"
-    echo "    createadmin           Crear un usuario administrador (admin)"
     echo "    restart [servicios]   Reiniciar los servicios"
     echo "    stop [servicios]      Detener los servicios"
     echo "    down                  Borrar la aplicacion y sus datos"
@@ -47,6 +47,10 @@ sub_restart() {
 
 sub_manage() {
     sub_exec python manage.py $@;
+}
+
+sub_wait() {
+    sub_exec /home/geonode/bins/wait-for-services.sh
 }
 
 sub_migrate(){
