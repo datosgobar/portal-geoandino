@@ -11,6 +11,7 @@ sub_help(){
     echo "Subcomandos:"
     echo "    up [servicios]        Levantar la aplicacion (Regenerar si es necesario)"
     echo "    exec [comandos]       Ejecutar un comando en la aplicacion de geoandino"
+    echo "    manage                Correr comando con ./manage.py"
     echo "    migrate               Migrar la base de datos"
     echo "    init                  Cargar los datos iniciales de geonode"
     echo "    createadmin           Crear un usuario administrador (admin)"
@@ -42,6 +43,10 @@ sub_down(){
 
 sub_restart() {
     sub_command restart $@;
+}
+
+sub_manage() {
+    sub_exec python manage.py $@;
 }
 
 sub_migrate(){
