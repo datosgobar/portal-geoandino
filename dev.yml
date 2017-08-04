@@ -15,10 +15,8 @@ services:
   geonode:
     build: geonode
     environment:
-      - ALLOWED_HOST_IP=127.0.0.1
-      - PROXY_ALLOWED_HOST_IP=127.0.0.1
-      - ALLOWED_HOST_NAME=localhost
-      - PROXY_ALLOWED_HOST_NAME=localhost
+      - ALLOWED_HOST_IP=*
+      - ALLOWED_HOST=*
       - SITEURL=http://localhost/
       - DEBUG=1
       - POSTGRES_USER=geoandino_user
@@ -38,14 +36,10 @@ services:
     build: geonetwork
     networks:
       main:
-    expose:
-      - "8080"
   geoserver:
     build: geoserver
     networks:
       main:
-    expose:
-      - "8080"
 
 networks:
   main:

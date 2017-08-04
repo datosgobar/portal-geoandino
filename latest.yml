@@ -14,9 +14,7 @@ services:
     image: datosgobar/portal-geoandino:0.1.10
     environment:
       - ALLOWED_HOST_IP
-      - PROXY_ALLOWED_HOST_IP
-      - ALLOWED_HOST_NAME
-      - PROXY_ALLOWED_HOST_NAME
+      - ALLOWED_HOST
       - SITEURL
       - POSTGRES_USER
       - POSTGRES_PASSWORD
