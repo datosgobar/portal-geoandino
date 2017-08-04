@@ -30,20 +30,20 @@ check_dependencies() {
 }
 
 check_environment_variables() {
-    info "Verificando variables de la base de datos."
-    for variable_name in POSTGRES_USER POSTGRES_PASSWORD POSTGRES_DB DATASTORE_DB;
+    info "Verificando variables."
+    for variable_name in POSTGRES_USER POSTGRES_PASSWORD POSTGRES_DB DATASTORE_DB ALLOWED_HOST_IP ALLOWED_HOST SITEURL;
     do
       if [ -z "${!variable_name}" ]; then
-        error "La variable de entorno $variable_name no debe estar vacía";
-        exit 1;
-      fi
-    done
-    info "Verificando variables de la aplicación";
-    for variable_name in ALLOWED_HOST_IP ALLOWED_HOST SITEURL;
-    do
-      if [ -z "${!variable_name}" ]; then
-        error "La variable de entorno $variable_name no debe estar vacía";
-        exit 1;
+        info "La variable de entorno $variable_name no debe estar vacía";
+        info "Por favor ingrese el valor:"
+        read $variable_name
+        info "El valor ingresado es ${!variable_name}. Estas seguro?"
+        select yn in "Si" "No"; do
+            case $yn in
+                Si ) break;;
+                No ) error "Cancelando"; exit 1;;
+            esac
+        done
       fi
     done
 }
@@ -101,6 +101,7 @@ info "Levantando la aplicación";
 "$usr_bin_geoandino_ctl" wait;
 info "Inicializacion la base de datos"
 "$usr_bin_geoandino_ctl" migrate;
+info "Cargando datos iniciales";
 "$usr_bin_geoandino_ctl" init;
 info "Reiniciando la aplicación";
 "$usr_bin_geoandino_ctl" restart;
