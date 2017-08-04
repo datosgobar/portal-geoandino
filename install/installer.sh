@@ -39,7 +39,7 @@ check_environment_variables() {
       fi
     done
     info "Verificando variables de la aplicación";
-    for variable_name in ALLOWED_HOST_IP PROXY_ALLOWED_HOST_IP ALLOWED_HOST_NAME PROXY_ALLOWED_HOST_NAME SITEURL;
+    for variable_name in ALLOWED_HOST_IP ALLOWED_HOST SITEURL;
     do
       if [ -z "${!variable_name}" ]; then
         error "La variable de entorno $variable_name no debe estar vacía";
@@ -55,8 +55,8 @@ check_permissions() {
     fi
 }
 check_permissions;
-check_dependencies;
 check_environment_variables;
+check_dependencies;
 
 mkdir -p "$INSTALL_DIR";
 
