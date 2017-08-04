@@ -2,4 +2,4 @@
 
 set -e;
 
-{{ bins_dir }}wait-for-it.sh {{ database_host }}:{{ database_port }} -- echo "The database is up"
+{{ bins_dir }}wait-for-it.sh $POSTGRES_HOST:5432 -- echo "The database is up"
