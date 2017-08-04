@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e;
 
-BRANCH="12-install-script"
+BRANCH="master"
 
 STABLE_FILE_URL="https://raw.githubusercontent.com/datosgobar/portal-geoandino/$BRANCH/install/stable_version.txt"
 
