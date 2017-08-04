@@ -96,11 +96,14 @@ mv $management_file "$INSTALL_DIR/$management_file_name";
 usr_bin_geoandino_ctl="/usr/local/bin/$management_file_name";
 ln -s "$INSTALL_DIR/$management_file_name" "$usr_bin_geoandino_ctl";
 
-"$usr_bin_geoandino_ctl" up
-"$usr_bin_geoandino_ctl" wait
-"$usr_bin_geoandino_ctl" migrate
-"$usr_bin_geoandino_ctl" init
-"$usr_bin_geoandino_ctl" restart
+info "Levantando la aplicación";
+"$usr_bin_geoandino_ctl" up;
+"$usr_bin_geoandino_ctl" wait;
+info "Inicializacion la base de datos"
+"$usr_bin_geoandino_ctl" migrate;
+"$usr_bin_geoandino_ctl" init;
+info "Reiniciando la aplicación";
+"$usr_bin_geoandino_ctl" restart;
 
 rm $download_dir -rf;
 
