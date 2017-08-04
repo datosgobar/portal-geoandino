@@ -102,6 +102,6 @@ ln -s "$INSTALL_DIR/$management_file_name" "$usr_bin_geoandino_ctl";
 "$usr_bin_geoandino_ctl" init
 "$usr_bin_geoandino_ctl" restart
 
-rm $download_dir;
+rm $download_dir -rf;
 
 info "Instalación completa"
