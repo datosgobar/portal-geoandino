@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+ProgName=$(basename $0);
+geoandino_name="geonode";
+db_name="db";
+APP_DIR=/etc/geoandino
+COMPOSE_FILE="$APP_DIR/docker-compose.yml"
+
+error() {
+    echo -e "\e[31m[ ERROR ]\e[0m $1";
+}
+
+sub_help(){
+    echo "Uso: $ProgName <subcomando>"
+    echo "Subcomandos:"
+    echo "    up [servicios]        Levantar la aplicacion (Regenerar si es necesario)"
+    echo "    exec [comandos]       Ejecutar un comando en la aplicacion de geoandino"
+    echo "    manage [commandos]    Correr comando con ./manage.py"
+    echo "    wait                  Esperar hasta que las dependencias estén disponibles"
+    echo "    migrate               Migrar la base de datos"
+    echo "    init                  Cargar los datos iniciales de geonode"
+    echo "    restart [servicios]   Reiniciar los servicios"
+    echo "    stop [servicios]      Detener los servicios"
+    echo "    down                  Borrar los datos de la apicación"
+    echo "    explode               Borrar la aplicación"
+    echo ""
+}
+
+check_permissions() {
+    if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+      error "Se necesitan permisos de root (sudo)";
+      exit 1;
+    fi
+}
+
+sub_command() {
+    docker-compose -f $COMPOSE_FILE $@;
+}
+
+sub_exec() {
+    sub_command exec $geoandino_name $@;
+}
+
+sub_up(){
+    sub_command up -d $@;
+}
+
+sub_stop(){
+    sub_command stop $@;
+}
+
+sub_down(){
+    sub_command down -v;
+}
+
+sub_restart() {
+    sub_command restart $@;
+}
+
+sub_manage() {
+    sub_exec python manage.py $@;
+}
+
+sub_wait() {
+    sub_exec /home/geonode/bins/wait-for-services.sh
+}
+
+sub_migrate(){
+    # Recommended by https://lists.osgeo.org/pipermail/geonode-users/2016-July/002102.html
+    sub_manage makemigrations;
+    sub_manage migrate account --noinput;
+    sub_manage migrate --noinput;
+}
+
+sub_init() {
+    sub_manage loaddata /usr/local/lib/python2.7/dist-packages/geonode/base/fixtures/initial_data.json
+}
+
+
+
+sub_explode() {
+    check_permissions;
+    sub_down;
+    rm $APP_DIR -rf;
+    rm /usr/local/bin/geoandino-ctl -rf;
+}
+
+subcommand=$1
+case $subcommand in
+    "" | "-h" | "--help")
+        sub_help
+        ;;
+    *)
+        shift
+        sub_${subcommand} $@
+        rc=$?
+        if [ $rc = 127 ]; then
+            echo "Error: '$subcommand' no es un subcomando conocido." >&2
+            echo "       Corre '$ProgName --help' para listar los comandos." >&2
+            exit 1;
+        fi
+        if [ $rc != 0 ]; then
+            exit $rc;
+        fi
+esac

@@ -73,6 +73,8 @@ sub_run_with() {
     sub_stop $geoandino_name
     echo -e "\e[32mAlgunos comando utiles:\e[39m"
     echo -e "\e[32mIniciar la app:\e[39m apachectl restart"
+    echo -e "\e[32mInstalar requerimientos de test:\e[39m pip install -r requirements/testing.txt"
+    echo -e "\e[32mCorrer los tests:\e[39m scripts/run_test.sh"
     echo -e "\e[32mVer los logs:\e[39m tail -f /var/logs/apache/error.log"
     echo -e "\e[32mIf it's required, remember to update the statics:\e[39m"
     echo "python manage.py collectstatic --noinput"
