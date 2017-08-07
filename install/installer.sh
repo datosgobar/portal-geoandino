@@ -111,13 +111,11 @@ do
     echo "$variable_name=${!variable_name}" >> $env_file;
 done
 
-info "Moviendo archivos a directorio $INSTALL_DIR";
+info "Moviendo archivos al directorio $INSTALL_DIR";
 
 mkdir -p "$INSTALL_DIR";
 
-mv $env_file $INSTALL_DIR;
-mv $compose_file $INSTALL_DIR;
-mv $management_file "$INSTALL_DIR/$management_file_name";
+mv $env_file $compose_file $management_file $INSTALL_DIR;
 
 usr_bin_geoandino_ctl="/usr/local/bin/$management_file_name";
 ln -s "$INSTALL_DIR/$management_file_name" "$usr_bin_geoandino_ctl";
@@ -135,3 +133,5 @@ info "Reiniciando la aplicación";
 rm $download_dir -rf;
 
 info "Instalación completa"
+info "Puede controlar geoandino mediante 'geoandino-ctl'"
+$INSTALL_DIR/$management_file_name --help
