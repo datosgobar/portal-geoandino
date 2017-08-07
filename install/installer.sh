@@ -29,22 +29,48 @@ check_dependencies() {
     docker-compose --version;
 }
 
+check_password() {
+variable_name="$1"
+
+if [ -z "${!variable_name}" ]; then
+    info "La variable de entorno $variable_name no debe estar vacía";
+
+    info "Por favor ingrese el valor (No se mostrará el valor):"
+    read -s variable_value
+    info "Por favor confirme el valor ingresado:"
+    read -s variable_name_confirm
+
+    if [ "$variable_value" != "$variable_name_confirm" ]; then
+        error "Los valores no coinciden."
+        exit 1;
+    else
+        "export" "$variable_name=$variable_value";
+    fi
+fi
+}
+
 check_environment_variables() {
     info "Verificando variables."
-    for variable_name in POSTGRES_USER POSTGRES_PASSWORD POSTGRES_DB DATASTORE_DB ALLOWED_HOST_IP ALLOWED_HOST SITEURL;
+    for variable_name in POSTGRES_USER POSTGRES_DB DATASTORE_DB ALLOWED_HOST_IP ALLOWED_HOST SITEURL;
     do
       if [ -z "${!variable_name}" ]; then
         info "La variable de entorno $variable_name no debe estar vacía";
         info "Por favor ingrese el valor:"
         read $variable_name
-        info "El valor ingresado es ${!variable_name}. Estas seguro?"
-        select yn in "Si" "No"; do
-            case $yn in
-                Si ) break;;
-                No ) error "Cancelando"; exit 1;;
-            esac
-        done
+        "export" "$variable_name=${!variable_name}";
       fi
+    done
+    check_password POSTGRES_PASSWORD
+    info "¿Confirma los valores ingresados?"
+    for variable_name in POSTGRES_USER POSTGRES_DB DATASTORE_DB ALLOWED_HOST_IP ALLOWED_HOST SITEURL;
+    do
+        echo "$variable_name=${!variable_name}";
+    done
+    select yn in "Si" "No"; do
+        case $yn in
+            Si ) break;;
+            No ) error "Cancelando"; exit 1;;
+        esac
     done
 }
 
@@ -57,8 +83,6 @@ check_permissions() {
 check_permissions;
 check_environment_variables;
 check_dependencies;
-
-mkdir -p "$INSTALL_DIR";
 
 download_dir=$(mktemp -d);
 compose_file="$download_dir/docker-compose.yml"
@@ -82,12 +106,14 @@ for variable_name in POSTGRES_USER POSTGRES_PASSWORD POSTGRES_DB DATASTORE_DB;
 do
     echo "$variable_name=${!variable_name}" >> $env_file;
 done
-for variable_name in ALLOWED_HOST_IP PROXY_ALLOWED_HOST_IP ALLOWED_HOST_NAME PROXY_ALLOWED_HOST_NAME SITEURL;
+for variable_name in ALLOWED_HOST_IP ALLOWED_HOST SITEURL;
 do
     echo "$variable_name=${!variable_name}" >> $env_file;
 done
 
 info "Moviendo archivos a directorio $INSTALL_DIR";
+
+mkdir -p "$INSTALL_DIR";
 
 mv $env_file $INSTALL_DIR;
 mv $compose_file $INSTALL_DIR;
