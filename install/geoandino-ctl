@@ -21,7 +21,7 @@ sub_help(){
     echo "    init                  Cargar los datos iniciales de geonode"
     echo "    restart [servicios]   Reiniciar los servicios"
     echo "    stop [servicios]      Detener los servicios"
-    echo "    down                  Borrar los datos de la apicación"
+    echo "    down                  Borrar los datos de la aplicación"
     echo "    explode               Borrar la aplicación"
     echo ""
 }
