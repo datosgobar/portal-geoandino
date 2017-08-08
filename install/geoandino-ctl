@@ -34,7 +34,9 @@ check_permissions() {
 }
 
 sub_command() {
-    docker-compose -f $COMPOSE_FILE $@;
+    # cd'ing is required because docker-compose.yml requires that the .env file is in the _working directory_
+    local _command="docker-compose -f $COMPOSE_FILE $@;"
+    bash -c "cd $APP_DIR && $_command";
 }
 
 sub_exec() {
