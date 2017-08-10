@@ -5,11 +5,15 @@ INSTALL_DIR=/etc/geoandino
 INSTALL_VERSION="$1"
 
 info() {
-    echo "[ INFO ] $1";
+    echo -e "\e[38;5;75m\e[1m[ INFO ]\e[0m $1";
+}
+
+success() {
+    echo -e "\e[38;5;76m\e[1m[ SUCCESS ]\e[0m $1";   
 }
 
 error() {
-    echo -e "\e[31m[ ERROR ]\e[0m $1";
+    echo -e "\e[1m\e[31m[ ERROR ]\e[0m $1";
 }
 
 if [ -z "$INSTALL_VERSION" ]; then
@@ -44,7 +48,7 @@ check_dependencies;
 
 download_dir=$(mktemp -d);
 compose_file_name="docker-compose.yml"
-compose_file="$download_dir/~compose_file_name"
+compose_file="$download_dir/$compose_file_name"
 management_file_name="geoandino-ctl"
 management_file="$download_dir/$management_file_name"
 env_file="$download_dir/.env";
@@ -63,10 +67,11 @@ geoandino-ctl stop;
 
 info "Actualizando archivos en el directorio $INSTALL_DIR";
 
-rm $INSTALL_DIR/$compose_file_name $INSTALL_DIR/$management_file_name
+usr_bin_geoandino_ctl="/usr/local/bin/$management_file_name";
+
+rm $INSTALL_DIR/$compose_file_name $INSTALL_DIR/$management_file_name $usr_bin_geoandino_ctl
 mv $compose_file $management_file $INSTALL_DIR;
 
-usr_bin_geoandino_ctl="/usr/local/bin/$management_file_name";
 ln -s "$INSTALL_DIR/$management_file_name" "$usr_bin_geoandino_ctl";
 
 info "Levantando la aplicación";
@@ -82,6 +87,7 @@ info "Corriendo comandos post-actualización";
 
 rm $download_dir -rf;
 
-info "Actualización completa"
+success "Actualización completa"
 info "Puede controlar geoandino mediante 'geoandino-ctl'"
-$INSTALL_DIR/$management_file_name --help
+
+"$usr_bin_geoandino_ctl" --help
