@@ -6,6 +6,14 @@ db_name="db";
 APP_DIR=/etc/geoandino
 COMPOSE_FILE="$APP_DIR/docker-compose.yml"
 
+info() {
+    echo -e "\e[95m[ INFO ]\e[0m $1";
+}
+
+success() {
+    echo -e "\e[92m[ SUCCESS ]\e[0m $1";   
+}
+
 error() {
     echo -e "\e[31m[ ERROR ]\e[0m $1";
 }
@@ -47,7 +55,7 @@ sub_exec() {
 sub_port-update() {
     # This commands must be idempotent
     # Noop
-    info "Ok"
+    info ""
 }
 
 sub_up(){
