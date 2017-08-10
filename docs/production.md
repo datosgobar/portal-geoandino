@@ -33,8 +33,15 @@ export SITEURL=http://localhost/ # Debe incluir el protocolo (`http://`) y la ba
 Para instalar la aplicación, hay que correr el siguien script:
     sudo -E bash -c "$(wget -O - https://raw.githubusercontent.com/datosgobar/portal-geoandino/master/install/install.sh)"
 
+## Actualización
+
+Para instalar la aplicación, hay que correr el siguien script:
+    sudo bash -c "$(wget -O - https://raw.githubusercontent.com/datosgobar/portal-geoandino/master/install/update.sh)"
+
 ## Configuracion de impresión
 
 Una configuración requerida para la que la impresión funcione correctamente es agregar tu IP al archivo `printing/config.yaml` en el servicio de `geoserver`. El mismo puede llevarse a cabo corriendo el siguiente script:
 
     docker-compose geoserver exec /usr/local/bin/add_printing_host.sh $IP
+
+
