@@ -23,6 +23,7 @@ sub_help(){
     echo "    stop [servicios]      Detener los servicios"
     echo "    down                  Borrar los datos de la aplicación"
     echo "    explode               Borrar la aplicación"
+    echo "    post-update           Correr comando necesarios después de una actualización"
     echo ""
 }
 
@@ -41,6 +42,12 @@ sub_command() {
 
 sub_exec() {
     sub_command exec $geoandino_name $@;
+}
+
+sub_port-update() {
+    # This commands must be idempotent
+    # Noop
+    info "Ok"
 }
 
 sub_up(){
