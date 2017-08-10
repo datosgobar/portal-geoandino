@@ -6,11 +6,11 @@ BRANCH="master"
 STABLE_FILE_URL="https://raw.githubusercontent.com/datosgobar/portal-geoandino/$BRANCH/install/stable_version.txt"
 
 info() {
-    echo "[ INFO ] $1";
+    echo -e "\e[38;5;75m\e[1m[ INFO ]\e[0m $1";
 }
 
-error() {
-    echo -e "\e[31m[ ERROR ]\e[0m $1";
+success() {
+    echo -e "\e[38;5;76m\e[1m[ SUCCESS ]\e[0m $1";   
 }
 
 download_dir=$(mktemp -d);
