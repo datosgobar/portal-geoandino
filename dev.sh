@@ -119,7 +119,7 @@ sub_test() {
 }
 
 sub_init() {
-    sub_manage loaddata /usr/local/lib/python2.7/dist-packages/geonode/base/fixtures/initial_data.json
+    sub_manage loaddata /home/geonode/geoandino/geoandino/fixtures/initial_data_geoandino.json
 }
 
 sub_console() {
