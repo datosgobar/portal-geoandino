@@ -13,12 +13,8 @@ success() {
     echo -e "\e[38;5;76m\e[1m[ SUCCESS ]\e[0m $1";   
 }
 
-error() {
-    echo -e "\e[1m\e[31m[ ERROR ]\e[0m $1";
-}
-
 download_dir=$(mktemp -d);
-installer_file="$download_dir/installer.sh";
+updater_file="$download_dir/updater.sh";
 stable_file="$download_dir/stable.txt";
 
 info "Obteniendo version estable.";
@@ -28,15 +24,15 @@ stable_version=$(cat $stable_file);
 
 info "Descargando script de instalación en $download_dir";
 
-installer_url="https://raw.githubusercontent.com/datosgobar/portal-geoandino/$stable_version/install/installer.sh"
+updater_url="https://raw.githubusercontent.com/datosgobar/portal-geoandino/$stable_version/install/updater.sh"
 
-curl "$installer_url" --output "$installer_file";
-chmod +x "$installer_file";
+curl "$updater_url" --output "$updater_file";
+chmod +x "$updater_file";
 
-info "Iniciando instalacion";
+info "Iniciando actualización";
 
-"$installer_file" "$stable_version";
+"$updater_file" "$stable_version";
 
 rm -rf "$download_dir"
 
-success "Instalación exitosa.";
+info "Actualización exitosa.";

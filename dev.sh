@@ -76,7 +76,7 @@ sub_run_with() {
     echo -e "\e[32mInstalar requerimientos de test:\e[39m pip install -r requirements/testing.txt"
     echo -e "\e[32mCorrer los tests:\e[39m scripts/run_test.sh"
     echo -e "\e[32mVer los logs:\e[39m tail -f /var/logs/apache/error.log"
-    echo -e "\e[32mIf it's required, remember to update the statics:\e[39m"
+    echo -e "\e[32mSi es necesario, actualizá los archivos estáticos:\e[39m"
     echo "python manage.py collectstatic --noinput"
     echo "chown -R geonode:www-data ../static_root/"
     echo "apachectl restart"
