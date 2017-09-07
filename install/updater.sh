@@ -83,7 +83,7 @@ info "Reiniciando la aplicación";
 "$usr_bin_geoandino_ctl" restart;
 "$usr_bin_geoandino_ctl" wait;
 info "Corriendo comandos post-actualización";
-"$usr_bin_geoandino_ctl" port-update;
+"$usr_bin_geoandino_ctl" post-update;
 
 rm $download_dir -rf;
 
