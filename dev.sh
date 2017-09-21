@@ -87,8 +87,8 @@ sub_run_with() {
         -e POSTGRES_USER=geoandino_user -e POSTGRES_PASSWORD=geoandino_pass \
         -e DATASTORE_DB=geoandino_data -e POSTGRES_DB=geoandino_db \
         -e DEBUG=1 \
-        -e ALLOWED_HOST_IP=127.0.0.1 -e PROXY_ALLOWED_HOST_IP=127.0.0.1 \
-        -e ALLOWED_HOST_NAME=localhost -e PROXY_ALLOWED_HOST_NAME=localhost \
+        -e ALLOWED_HOST_IP='*' -e PROXY_ALLOWED_HOST_IP='*' \
+        -e ALLOWED_HOST_NAME='*' -e PROXY_ALLOWED_HOST_NAME='*' \
         -e SITEURL=http://localhost/ \
         --link "$db:db" --link "$geonetwork:geonetwork" \
         --link "$geoserver:geoserver" \
