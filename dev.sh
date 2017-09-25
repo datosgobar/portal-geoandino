@@ -41,7 +41,7 @@ sub_up(){
 sub_stop(){
     sub_command stop $@;
 }
-  
+
 sub_down(){
     sub_command down -v;
 }
@@ -115,7 +115,7 @@ sub_migrate(){
 }
 
 sub_test() {
-    sub_manage test --settings=geoandino.conf.settings.testing;
+    sub_manage test --settings=geoandino.conf.settings.testing -v 3;
 }
 
 sub_init() {

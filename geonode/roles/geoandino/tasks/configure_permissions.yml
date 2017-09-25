@@ -8,11 +8,16 @@
     recurse: yes
     mode: 0777
 
+# TODO: Remove this tasks. If a new sub-app is added, you need to add a new line here
+
 - name: Remove execution permission from tests
   file:
-    path: "{{ geoandino_app }}tests/"
+    path: "{{ item }}"
     recurse: yes
     mode: 0666
+  with_items:
+    - "{{ geoandino_app }}tests/"
+    - "{{ geoandino_app }}apps/datajsonar/tests/"
 
 - name: Create upload directories
   file:
