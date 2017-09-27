@@ -49,7 +49,14 @@ sub_command() {
 }
 
 sub_exec() {
-    sub_command exec $geoandino_name $@;
+    # GEOANDINO_YES_INSTALL variable is used for avoiding user interaction
+    # Also used in installer.sh
+    local _command="sub_command exec ";
+    if [ -n "$GEOANDINO_YES_INSTALL" ]; then
+        info "Disabling pseudo-tty allocation"
+        _command="$_command -T"
+    fi
+    eval "$_command $geoandino_name $@";
 }
 
 sub_port-update() {
