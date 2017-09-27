@@ -10,8 +10,12 @@ ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true 
 
 WORKDIR $BASE_DIR/webapps
 
+# The original downlaod url is
+# https://sourceforge.net/projects/geonetwork/files/GeoNetwork_opensource/v${GN_VERSION}/geonetwork.war/download
+# But  sourceforge.net is down :/
+
 RUN curl -fSL -o $GN_FILE \
-  https://sourceforge.net/projects/geonetwork/files/GeoNetwork_opensource/v${GN_VERSION}/geonetwork.war/download && \
+  https://netix.dl.sourceforge.net/project/geonetwork/GeoNetwork_opensource/v${GN_VERSION}/geonetwork.war && \
   echo "$GN_DOWNLOAD_MD5 *$GN_FILE" | md5sum -c
 
 RUN  mkdir -p $BASE_DIR/webapps/geonetwork && \
