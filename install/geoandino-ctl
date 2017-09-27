@@ -33,6 +33,11 @@ sub_help(){
     echo "    explode               Borrar la aplicación"
     echo "    post-update           Correr comando necesarios después de una actualización"
     echo ""
+    echo "Variables de entorno:"
+    echo "    Algunas variables modifican el comportamiento de los comandos"
+    echo "    GEOANDINO_YES_INSTALL: Pasa el parametro '-T' a docker-compose exec."
+    echo "      Útil para correr comandos sin una terminal."
+    echo ""
 }
 
 check_permissions() {
