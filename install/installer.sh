@@ -70,12 +70,14 @@ check_environment_variables() {
     do
         echo "$variable_name=${!variable_name}";
     done
-    select yn in "Si" "No"; do
-        case $yn in
-            Si ) break;;
-            No ) error "Cancelando"; exit 1;;
-        esac
-    done
+    if [ -z "$GEOANDINO_YES_INSTALL" ]; then
+        select yn in "Si" "No"; do
+            case $yn in
+                Si ) break;;
+                No ) error "Cancelando"; exit 1;;
+            esac
+        done
+    fi
 }
 
 check_permissions() {
