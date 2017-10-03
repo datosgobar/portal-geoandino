@@ -2,8 +2,6 @@ version: '3.1'
 
 services:
   db:
-    tmpfs: # If you restart the container, you'll lose your data;)
-      - /var/lib/postgresql/data/pgdata # Speed up development!
     build: postgres
     environment:
       - POSTGRES_USER=geoandino_user
