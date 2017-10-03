@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   db:
-    build: postgres
+    image: datosgobar/portal-geoandino-postgres:0.1-alpha1
     environment:
       - POSTGRES_USER=geoandino_user
       - POSTGRES_PASSWORD=geoandino_pass
