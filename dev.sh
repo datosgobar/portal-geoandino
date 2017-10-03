@@ -158,7 +158,6 @@ sub_sync() {
         sub_exec rm -rf /home/geonode/geoandino/geoandino;
         sub_exec rm -rf /home/geonode/static_root;
         sub_cp "$path/." /home/geonode/geoandino
-        sub_link
         sub_exec python setup.py install;
         sub_collectstatic
     else
