@@ -7,7 +7,7 @@ geonode_host: geonode
 bins_dir: "{{ geonode_home }}bins/"
 
 geoandino_dir: "/home/geonode/geoandino/"
-geoandino_version: 0.1-alpha1
+geoandino_version: 0.1-alpha3
 geoandino_app: "{{ geoandino_dir }}geoandino/"
 
 static_dir: "{{ geonode_home }}static_root/"
