@@ -25,6 +25,25 @@
   pip:
     requirements: "{{ geoandino_dir }}requirements.txt"
 
+
+- name: Install transifex-client==0.12.5
+  pip:
+    name: "transifex-client"
+    version: 0.12.5
+
+- name: Uninstall python-slugify and awesome-slugify
+  pip:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - python-slugify
+    - awesome-slugify
+
+- name: Reinstall awesome-slugify
+  pip:
+    name: awesome-slugify
+    version: 1.6.5
+
 - import_tasks: configure_apache.yml
 - import_tasks: configure_app.yml
 - import_tasks: configure_permissions.yml
