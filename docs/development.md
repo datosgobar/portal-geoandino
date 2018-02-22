@@ -64,39 +64,32 @@ Entonces, si se quiere cambiar a la versión `0.1-release`, basta con cambiar la
 Para trabajar con el repositorio del tema directamente montado en el contenedor, se pueden seguir los siguientes pasos.
 (NOTA: `$THEME_PATH` hace referencia al repositorio del tema en la máquina `host`, no en el contenedor)
 
-Primero hay que levantar los servicios:
+El primer paso a realizar es levantar la aplicación siguendo los pasos indicados en la sección [Levantar la aplicación](#levantar-la-aplicaci%C3%B3n).
 
-    docker build -t db postgres/
-    docker build -t geoserver geoserver/
-    docker build -t geonetwork geonetwork/
-    docker run --name db -e POSTGRES_USER=geonode \
-        -e POSTGRES_PASSWORD=geonode \
-        -e DATASTORE_DB=geonode_data -d db
-    docker run --name geoserver -d geoserver
-    docker run --name geonetwork -d geonetwork
+Una vez que ese proceso finalizó, tendremos en el _host_ creadas las imágenes y contenedores necesarios para poder modificar el contenedor que contiene la aplicación web Geoandino y montar un directorio local del host donde se podrán realizar las modificaciones.
 
-Luego construir la imagen de la aplicación (Este paso puede tardar bastante):
+El segundo paso es instalar una librería de Python llamada `docker`, que es utilizada por el paso siguiente para modificar en _runtime_ el contenedor de Geoandino. Esta librería puede ser instalada globalmente en el sistema _host_ o en un _virtualenv_:
 
-    docker build -t geonode geonode/
+    pip install docker
 
-Luego levantar la aplicación con los servicios y el repositorio montado.
+Finalmente se modifica el contenedor y se accede al mismo, montando el directorio de trabajo que contiene el código del _theme_ visual de Geoandino:
 
-    THEME_PATH=/path/a/la/app/geoandino-theme
+    ./dev.sh run_with /path/al/directorio/local/geoandino-theme/ /home/geonode/geoandino
 
-    docker run -v $THEME_PATH:/home/geonode/geoandino \
-        -e POSTGRES_USER=geonode -e POSTGRES_PASSWORD=geonode \
-        -e DATASTORE_DB=geonode_data \
-        --link "db:db" --link "geonetwork:geonetwork" \
-        --link "geoserver:geoserver" \
-        -p 80:80 -it geonode /bin/bash
+El segundo parámetro es el path al directorio del contenedor donde se montará el directorio de trabajo local, y debe coincidir con el directorio donde está instalado el theme visual de Geoandino. Si se siguieron los pasos definidos en [Levantar la aplicación](#levantar-la-aplicaci%C3%B3n) para crear los contenedores, el mismo es `/home/geonode/geoandino`.
 
-Luego, desde dentro del contenedor, hay que configurar y reiniciar la aplicación:
+El comando anterior nos dejará dentro del contenedor, con el directorio de trabajo montado en `/home/geonode/geoandino`. Al ingresar se imprimirá por consola algunos comandos útiles que el desarrollador puede usar para realizar distintas acciones para controlar el ambiente durante el desarrollo de las modificaciones del _theme_ visual:
 
-    /home/geonode/bins/link_settings.sh
-    python manage.py migrate
+    Algunos comando utiles:
+    Iniciar la app: apachectl restart
+    Instalar requerimientos de test: pip install -r requirements/testing.txt
+    Correr los tests: scripts/run_test.sh
+    Ver los logs: tail -f /var/logs/apache/error.log
+    Si es necesario, actualizá los archivos estáticos:
+    python manage.py collectstatic --noinput
+    chown -R geonode:www-data ../static_root/
     apachectl restart
 
-Si se cambian los archivos estáticos, deben correrse los comandos:
+Por ejemplo, si se desea modificar las hojas de estilo del tema visual y modificar templates HTML, será necesario correr los comandos `collectstatic` y `chown`.
 
-    python manage.py collectstatic
-    apachectl restart
+Para salir del contenedor basta con tipear `exit` en la consola, pudiendo volver a ingresar utilizando el mismo comando `./dev.sh run_with` usado anteriormente para ingresar.
